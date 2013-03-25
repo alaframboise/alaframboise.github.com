@@ -1,4 +1,4 @@
 alaframboise.github.com
 =======================
 
-Me!
+[View homepage](http://alaframboise.github.com)
