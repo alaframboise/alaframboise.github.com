@@ -1,7 +1,7 @@
 {
     "type": "Feature",
     "id": "Test",
-    "properties": {},
+    "properties": {"Name":"Big Bear Lake, CA"},
     "geometry": {
         "type": "Point",
         "coordinates": [
