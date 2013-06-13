@@ -1,7 +1,7 @@
 {
     "type": "Feature",
     "id": "OpenLayers.Feature.Vector_314",
-    "properties": {city:"Big Bear Lake,CA"},
+    "properties": {},
     "geometry": {
         "type": "Point",
         "coordinates": [
