@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Esri: Going Open with GitHub</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>ESRI:</h1>
+					<h3>Going Open With GitHub</h3>
+					<p>
+						<small>Created by <a href="http://developers.arcgis.com">Allan Laframboise</a> / <a href="http://twitter.com/al_laframboise">@Al_Laframboise</a></small>
+					</p>
+				</section>
+
+				<section>
+					<p>
+						A long time ago in a galaxy far, far away... 
+					</p>
+				</section>
+
+				<section>
+					<p>
+						GIS
+					</p>
+				</section>
+				<section>
+					<p>
+						apps and tools
+					</p>
+				</section>
+				<section>
+					<p>
+						developers
+					</p>
+				</section>
+
+				<section>
+					<p>
+						"Why don't we put some of these projects on GitHub?"
+					</p>
+				</section>
+
+				<section>
+					<h2>Today - Esri on GitHub</h2>
+					<p class="fragment">Planned</p>
+					<p class="fragment">Implemented</p>
+					<p class="fragment">Executed</p>
+					<p class="fragment">Tips and Tricks</p>
+				</section>
+
+				<section>
+					<section>
+						<p>Already had a lot of stuff out there...</p>
+					</section>
+					<section>
+						<h2>SourceForge, CodePlex, Google Code</h2>
+					</section>
+					<section>
+						<h2>personal accounts</h2>
+					</section>
+					<section>
+						<h2>Resource Centers</h2>
+					</section>
+					<section>
+						<h2>Zip Files</h2>
+					</section>
+					<section>
+						<h2>contribute?</h2>
+					</section>
+					<section>
+						<h2>collaborate?</h2>
+					</section>
+					<section>
+						<h2>new open projects</h2>
+					</section>
+				</section>
+				
+				<section>
+					<section>
+						<p>So what did we do?</p>
+					</section>
+					<section>
+						<h2>assembled a team</h2>
+					</section>
+					<section>
+						<h2>Corporate buy-off</h2>
+					</section>
+					<section>
+						<h2>GitHub organization</h2>
+					</section>
+					<section>
+						<h2>uploaded projects</h2>
+					</section>
+					<section>
+						<h2>testing workflows</h2>
+					</section>
+				</section>
+
+				<section>
+					<p>Esri is a very large organization</p>
+				</section>
+
+				<section>
+					<h2>
+						GitHub?
+					</h2>
+					<p>coolest</p>
+					<p>largest</p>
+					<p>popular</p>
+					<p>relatively easy</p>
+					<p class="fragment"><i>support for organizations</i></p>
+					<p>tons of features</p>
+					<p>api</p>
+				</section>
+
+				<section>
+					<section>
+						<p>GitHub for Organizations</p>
+					</section>
+					<section>
+						<h2>Public</h2> 
+						<p>Free for everyone!</p>
+					</section>
+					<section>
+						<h2>Private</h2>
+						<p>Monthly fee.</p>
+					</section>
+				</section>	
+				
+				<section>
+					<h2>Private?</h2>
+					<p class="fragment">learn platform</p>
+					<p class="fragment">work-flows</p>
+					<p class="fragment">train</p>
+					<p class="fragment">incubation</p>
+				</section>
+
+				<section>
+					<section>
+						<p>
+							Membership 101
+						</p>
+					</section>
+					<section>
+						<h2>
+							Teams
+						</h2>
+						<ol >
+							<ul class="fragment">Owner - admin and account access...</ul>
+							<ul class="fragment">Admin - create, transfer, add/remove...</ul>
+							<ul class="fragment">Push - write, merge, manage issues...</ul>
+							<ul class="fragment">Pull - fork, pull requests, comment...</ul>
+						</ol>
+					</section>
+					<section>
+						<h2>Caution: Admin Teams</h2>
+						<p>Add, remove and transfer repos!</p>
+					</section>
+					<section>
+						<h2>Caution: Transfer</h2>
+						<p>Re-assign owner and team!</p>
+					</section>
+					<section>
+						<a class="image" href="https://github.com/Esri/quickstart-map-js" target="_blank">
+							<img src="images/teams.png" alt="readme">
+						</a>
+					</section>
+					<section>
+						<h2>Tip: One "Big Team"</h2>
+						<p class="fragment">Add all members</p>
+						<p class="fragment">Add all private repos</p>
+					</section>
+				</section>
+
+				<section>
+					<p>work-flow (insert diagram)</p>
+				</section>
+
+				<section>
+					<h2>Standards</h2>
+					<p class="fragment">There are none!</p>
+				</section>
+
+				<section>
+					<section>
+						<p>the repo</p>
+					</section>
+					<section>
+						<h2>Name</h2>
+						<p class="fragment">repo-name-language</p>
+						<p class="fragment">"arcgis" reserved</p>
+						<p class="fragment">e.g. quickstart-map-js</p>
+						<p class="fragment">e.g. arcgis-flex-viewer</p>
+					</section>
+					<section>
+						<h2>Description</h2>
+						<p class="fragment"><140 characters</p>
+						<p class="fragment">e.g. ArcGIS JavaScript mapping app to get you started fast.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p>README.md</p>
+					</section>
+					<section>
+						<p>There's nothing worse that a bad README.md!</p>
+					</section>
+					<section>
+						<h2>Key Components</h2>
+						<div class="fragment">
+							<p>Description</p>
+							<p>Features</p>
+							<p>Instructions</p>
+							<p>Requirements</p>
+							<p>Resources</p>
+							<p>Issues</p>
+							<p>Contributing</p>
+							<p>Licensing</p>
+						</div>
+					</section>
+					<section>
+						<p>the ultimate README.md!</p>
+						<a class="image fragment" href="https://github.com/Esri/quickstart-map-js" target="_blank">
+						<img height="500" src="images/readme.png" alt="readme">
+						</a>
+					</section>
+				</section>	
+				
+				<section>
+					<section>
+						<p>contributions</p>
+					</section>
+					<section>
+						<h2>Tip: Single Contributions REPO</h2>
+						<p>You are free to contribute to this repo.  See repo guidelines <a>here</a>.</p>
+					</section>
+					<section>
+						<h2>CONTRIBUTION.md</h2>
+						<p>Guidelines</p>
+						<p>Issues</p>
+						<p>Licensing</p>
+					</section>
+					<section>
+						<h2>Pull Request</h2>
+						<a class="image fragment" href="https://github.com/Esri/quickstart-map-js" target="_blank">
+						<img height="500" src="images/readme.png" alt="readme">
+						</a>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p>licensing</p>
+					</section>
+					<section>
+						<h2>Apache2</h2>
+						<p>Distribution and Usage</p>
+					</section>
+					<section>
+						<h2>Copyrights</h2>
+						<p>Rights to retain</p>
+					</section>
+					<section>
+						<pre>
+Esri License here...
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Tip: Viewing Live apps</h2>
+					</section>
+					<section>
+						<h2>hosting</h2>
+						<p class="fragment">gh-pages</p>
+						<p class="fragment">esri demoserver</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p>esri.github.com</p>
+					</section>
+					<section>
+						<a class="image" href="http://esri.github.com" target="_blank">
+						<img height="500" src="images/esrigithub.png" alt="esrigithub">
+						</a>
+					</section>
+					<section>
+					<h2>Tip: GitHub API</h2>
+						<pre><code data-trim contenteditable>
+require "json"
+require "yaml"
+require "hashie"
+require "rest-client"
+require "erb"
+
+# Get repos - Limited to 5000 requests per hour
+@repo_array = JSON.parse(RestClient.get(@base_url+"/orgs/esri/repos?type=public&page=1&per_page=100", content_type: :json))
+@repo_array = @repo_array.sort_by {|a| a["watchers_count"]}
+
+# Get README.md info and tags
+@repos ||= @repo_array.collect! do |repo|
+if !repo["name"].nil?
+	# Get the repo content
+	uri = URI(@base_url+"/repos/Esri/" + repo["name"] + "/contents/README.md")
+	repo_readme = RestClient.get(uri.to_s, content_type: :json)
+	# Extract Esri tags  
+	if !repo_readme.nil?
+		repo_readme = JSON.parse(repo_readme)		
+		content = Base64.decode64(repo_readme["content"])
+		if content
+			tags = content[/.*\(Esri Tags:(.*?)\)/,1]
+			tags = !tags.nil? ? tags.strip : @default_tag
+			language = content[/.*\(Esri Language:(.*?)\)/,1]	
+		end
+	end
+	Hashie::Mash.new(repo)	
+end
+						</code></pre>
+					</section>
+					
+				</section>
+			
+				<section>
+					<section>
+						<p>Support</p>
+					</section>
+					<section>
+						<h2>Tip: email hooks</h2>
+						<p class="fragment">receive notification</p>
+						<p class="fragment">action</p>
+						<p class="fragment">issues, pull requests...</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p>OS Projects</p>
+					</section>
+					<section>
+						<h2>ArcGIS Flex Viewer</h2>
+						<p class="fragment">Popular map viewer</p>
+					</section>
+					<section>
+						<h2>Terraformer</h2>
+						<p class="fragment">GeoJSON library</p>
+					</section>
+					<section>
+						<h2>esri-leaflet</h2>
+						<p class="fragment">ArcGIS Basemaps</p>
+						<p class="fragment">ArcGIS Services</p>
+					</section>
+					<section>
+						<h2>hadoop</h2>
+						<p class="fragment">...</p>
+						<p class="fragment">...</p>
+					</section>
+					<section>
+						<h2>geometry-java</h2>
+						<p class="fragment">...</p>
+						<p class="fragment">...</p>
+					</section>
+				</section>
+
+				<section>
+					<p>and then something else happened...</p>
+				</section>
+
+				<section>
+					<section>
+						<p>Enterprise GitHub</p>
+					</section>
+					<section>
+						<h2>GitLab</h2>
+						<p class="fragment">Light-weight</p>
+						<p class="fragment">Free</p>
+						<p class="fragment">Different UI</p>
+					</section>
+					<section>
+						<h2>GitHub Enterprise</h2>
+						<p class="fragment">Cloud</p>
+						<p class="fragment">LDAP</p>
+						<p class="fragment">Same Interface</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p>In the end...</p>
+					</section>
+					<section>
+						<h2>Two GitHub organizations</h2>
+					</section>
+					<section>
+						<h2>&gt;200 software engineers</h2>
+					</section>
+					<section>
+						<h2>&gt;115 geospatial projects</h2>
+					</section>
+					<section>
+						<h2>GitHub Enterpise</h2>
+					</section>
+					<section>
+						<h2>=</h2>
+					</section>
+					<section>
+						<h2>GeoSpatial Collaboration Maximus!</h2>
+					</section>
+				</section>
+				
+
+
+				<!-- STOP -->
+
+
+				<!-- Example of nested vertical slides -->
+				<section>
+					<section>
+						<h2>Vertical Slides</h2>
+						<p>
+							Slides can be nested inside of other slides,
+							try pressing <a href="#" class="navigate-down">down</a>.
+						</p>
+						<a href="#" class="image navigate-down">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section>
+						<h2>Basement Level 1</h2>
+						<p>Press down or up to navigate.</p>
+					</section>
+					<section>
+						<h2>Basement Level 2</h2>
+						<p>Cornify</p>
+						<a class="test" href="http://cornify.com">
+							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
+						</a>
+					</section>
+					<section>
+						<h2>Basement Level 3</h2>
+						<p>That's it, time to go back up.</p>
+						<a href="#/2" class="image">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
+						</a>
+					</section>
+				</section>
+
+				<section>
+					<h2>Slides</h2>
+					<p>
+						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2>Point of View</h2>
+					<p>
+						Press <strong>ESC</strong> to enter the slide overview.
+					</p>
+					<p>
+						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
+					</p>
+				</section>
+
+				<section>
+					<h2>Works in Mobile Safari</h2>
+					<p>
+						Try it out! You can swipe through the slides and pinch your way to the overview.
+					</p>
+				</section>
+
+				<section>
+					<h2>Marvelous Unordered List</h2>
+					<ul>
+						<li>No order here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+						<li>Or here</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Fantastic Ordered List</h2>
+					<ol>
+						<li>One is smaller than...</li>
+						<li>Two is smaller than...</li>
+						<li>Three!</li>
+					</ol>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Markdown support
+
+						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+
+						```
+						<section data-markdown>
+						  ## Markdown support
+
+						  For those of you who like that sort of thing.
+						  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+						</section>
+						```
+					</script>
+				</section>
+
+				<section id="transitions">
+					<h2>Transition Styles</h2>
+					<p>
+						You can select from different transitions, like: <br>
+						<a href="?transition=cube#/transitions">Cube</a> -
+						<a href="?transition=page#/transitions">Page</a> -
+						<a href="?transition=concave#/transitions">Concave</a> -
+						<a href="?transition=zoom#/transitions">Zoom</a> -
+						<a href="?transition=linear#/transitions">Linear</a> -
+						<a href="?transition=fade#/transitions">Fade</a> -
+						<a href="?transition=none#/transitions">None</a> -
+						<a href="?#/transitions">Default</a>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h2>Themes</h2>
+					<p>
+						Reveal.js comes with a few themes built in: <br>
+						<a href="?theme=sky#/themes">Sky</a> -
+						<a href="?theme=beige#/themes">Beige</a> -
+						<a href="?theme=simple#/themes">Simple</a> -
+						<a href="?theme=serif#/themes">Serif</a> -
+						<a href="?theme=night#/themes">Night</a> -
+						<a href="?#/themes">Default</a>
+					</p>
+					<p>
+						<small>
+							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
+						</small>
+					</p>
+				</section>
+
+				<section>
+					<section data-state="alert">
+						<h2>Global State</h2>
+						<p>
+							Set <code>data-state="something"</code> on a slide and <code>"something"</code>
+							will be added as a class to the document element when the slide is open. This lets you
+							apply broader style changes, like switching the background.
+						</p>
+						<a href="#" class="image navigate-down">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-state="blackout">
+						<h2>"blackout"</h2>
+						<a href="#" class="image navigate-down">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section data-state="soothe">
+						<h2>"soothe"</h2>
+						<a href="#" class="image navigate-next">
+							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(-90deg);">
+						</a>
+					</section>
+				</section>
+
+				<section data-state="customevent">
+					<h2>Custom Events</h2>
+					<p>
+						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
+					</p>
+					<pre><code data-trim contenteditable style="font-size: 18px; margin-top: 20px;">
+Reveal.addEventListener( 'customevent', function() {
+	console.log( '"customevent" has fired' );
+} );
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Clever Quotes</h2>
+					<p>
+						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;The nice thing about standards is that there are so many to choose from&rdquo;</q> and block:
+					</p>
+					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
+						&ldquo;For years there has been a theory that millions of monkeys typing at random on millions of typewriters would
+						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.&rdquo;
+					</blockquote>
+				</section>
+
+				<section>
+					<h2>Pretty Code</h2>
+					<pre><code data-trim contenteditable>
+function linkify( selector ) {
+  if( supports3DTransforms ) {
+
+    var nodes = document.querySelectorAll( selector );
+
+    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
+      var node = nodes[i];
+
+      if( !node.className ) ) {
+        node.className += ' roll';
+      }
+    };
+  }
+}
+					</code></pre>
+					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+				</section>
+
+				<section>
+					<h2>Intergalactic Interconnections</h2>
+					<p>
+						You can link between slides internally,
+						<a href="#/2/3">like this</a>.
+					</p>
+				</section>
+
+				<section>
+					<section>
+						<h2>Fragmented Views</h2>
+						<p>Hit the next arrow...</p>
+						<p class="fragment">... to step through ...</p>
+						<ol>
+							<li class="fragment"><code>any type</code></li>
+							<li class="fragment"><em>of view</em></li>
+							<li class="fragment"><strong>fragments</strong></li>
+						</ol>
+
+						<aside class="notes">
+							This slide has fragments which are also stepped through in the notes window.
+						</aside>
+					</section>
+					<section>
+						<h2>Fragment Styles</h2>
+						<p>There's a few styles of fragments, like:</p>
+						<p class="fragment grow">grow</p>
+						<p class="fragment shrink">shrink</p>
+						<p class="fragment roll-in">roll-in</p>
+						<p class="fragment fade-out">fade-out</p>
+						<p class="fragment highlight-red">highlight-red</p>
+						<p class="fragment highlight-green">highlight-green</p>
+						<p class="fragment highlight-blue">highlight-blue</p>
+					</section>
+				</section>
+
+				<section>
+					<h2>Spectacular image!</h2>
+					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
+						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
+					</a>
+				</section>
+
+				<section>
+					<h2>Export to PDF</h2>
+					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
+					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
+					<script>
+						document.getElementById('slideshare').attributeName = 'allowfullscreen';
+					</script>
+				</section>
+
+				<section>
+					<h2>Take a Moment</h2>
+					<p>
+						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take distracting slides off the screen
+						during a presentation.
+					</p>
+				</section>
+
+				<section>
+					<h2>Stellar Links</h2>
+					<ul>
+						<li><a href="http://slid.es">Try the online editor</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
+						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h1>THE END</h1>
+					<h3>BY Hakim El Hattab / hakim.se</h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

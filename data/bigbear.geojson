@@ -1,18 +1,12 @@
 {
     "type": "Feature",
-    "id": "OpenLayers.Feature.Vector_314",
-    "properties": {city:"Big Bear Lake,CA"},
+    "id": "My Point",
+    "properties": {"Name":"Big Bear Lake,CA"},
     "geometry": {
         "type": "Point",
         "coordinates": [
             -116.905345223157,
             34.2350167148301
         ]
-    },
-    "crs": {
-        "type": "name",
-        "properties": {
-            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-        }
     }
 }
