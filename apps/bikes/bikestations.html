@@ -168,20 +168,16 @@
         var e = document.getElementById("query");
         fsUrl = e.options[e.selectedIndex].value;
         // Get new layer and zoom
-        
-        var t1 = new Date();
         L.esri.get(fsUrl, {}, function(response){
-          var t2 = new Date();
-          alert("Took this long to get extent" + (t2.getTime() - t1.getTime())/1000);
-          var p = L.esri.Util.extentToBounds(response.extent).getCenter();
-          map.panTo([p.lng,p.lat]);
+          var b = L.esri.Util.extentToBounds(response.extent); 
+          map.fitBounds(b);
           createBikesLayer(true);
         });
       }
 
       function createBikesLayer(findBikes) {
         if (fl) {
-          map.removeLayer(fl.cluster);
+          //map.removeLayer(fl.cluster);
           map.removeLayer(fl);
         }
 
