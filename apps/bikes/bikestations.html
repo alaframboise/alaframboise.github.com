@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bike Stations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Load Leaflet from their CDN -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+    <![endif]-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+
+    <!-- Load Leaflet.markercluster -->
+    <link rel="stylesheet" href="lib/markercluster/MarkerCluster.css" />
+    <script src="lib/markercluster/leaflet.markercluster.js"></script>
+
+    <!-- Load Esri Leaflet -->
+    <script src="lib/esri-leaflet/esri-leaflet.js"></script>
+
+    <!-- Load the ClusteredFeatureLayer plugin -->
+    <script src="lib/esri-leaflet/extras/clustered-feature-layer.js"></script>
+
+     <!-- Load a small bit of CSS and Javascript specifcally for these demos -->
+    <link rel="stylesheet" href="demo.css" />
+    <script src="demo.js"></script>
+
+    <!-- Make the map fill the entire page -->
+    <style>
+      html, body, #map {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+    </style>
+
+    <!-- Define some additional styles for the clusters, you'll see these classes later -->
+    <style>
+
+      .cluster {
+        width: 30px;
+        height: 30px;
+        margin-left: 5px;
+        margin-top: 5px;
+        text-align: center;
+        border-radius: 20px;
+        background-clip: padding-box;
+      }
+
+      .digits-1 {
+        font-size: 14px;
+        height: 28px;
+        width: 28px;
+        line-height: 28px;
+        background-color: rgba(181, 226, 140, 1);   
+        border: 5px solid rgba(181, 226, 140, 0.5); 
+        border-radius: 28px;   
+      }
+
+      .digits-2 {
+        font-size: 16px;
+        height: 34px;
+        width: 34px;
+        line-height: 35px;
+        background-color: rgba(241, 211, 87, 1);  
+        border: 5px solid rgba(241, 211, 87,  0.5);  
+        border-radius: 34px;     
+      }
+
+      .digits-3 {
+        font-size: 18px;
+        height: 48px;
+        width: 47px;
+        line-height: 47px;
+        border-width: 5px;
+        background-color: rgba(241, 128, 23, 1);       
+        border: 5px solid rgba(241, 128, 23, 0.5); 
+        border-radius: 48px;      
+      }
+
+      .digits-4 {
+        font-size: 20px;
+        height: 64px;
+        width: 64px;
+        line-height: 64px;
+        border-width: 5px;
+        background-color: rgba(241, 128, 23, 1);       
+        border: 5px solid rgba(241, 128, 23, 0.5); 
+        border-radius: 64px;         
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div class="demo-controls">
+      <h1 class="title expand" id="title" onclick="showControls();">Bike Stations</h1>
+      <div class="control-container hide" id="controlContainer">
+        <select class="select" id="query" onchange="goToCity();">
+          <!--option>Near Me</option-->
+          <option value="http://geonode.geeknixta.com/citybikes/rest/services/citibikenyc/FeatureServer/0" selected>New York</option>
+          <option value="http://geonode.geeknixta.com/citybikes/rest/services/barclays/FeatureServer/0">London</option>
+          <option value="http://geonode.geeknixta.com/citybikes/rest/services/esribike/FeatureServer/0">Esri Campus</option>
+          <option value="http://geonode.geeknixta.com/citybikes/rest/services/bixi/FeatureServer/0">Montreal</option>
+          <option value="http://geonode.geeknixta.com/citybikes/rest/services/citycycle/FeatureServer/0">Brisbane</option>
+          <option value="http://geonode.geeknixta.com/citybikes/rest/services/mejorenbici/FeatureServer/0">Buenos Aires</option>
+        </select>
+        <button class="btn" id="findBikes" onclick="createBikesLayer(true);">Find</button>
+        <button class="btn" id="returnBikes" onclick="createBikesLayer(false);">Return</button>
+      </div>
+    </div>
+    <script>
+      var map = L.map('map').setView([40.696, -73.977], 15);
+
+      // Add ArcGIS Online basemap
+      L.esri.basemapLayer("Gray").addTo(map);
+
+      // Feature service - default
+      var fsUrl = "http://geonode.geeknixta.com/citybikes/rest/services/citibikenyc/FeatureServer/0";
+
+      // Feature and Cluster layer
+      var fl;
+
+      // Define some icons that represent our bus stops
+      var icons = {
+        plenty: L.icon({
+          iconUrl: 'images/green.png',
+          iconRetinaUrl: 'images/green@2x.png',
+          iconSize: [28, 45],
+          iconAnchor: [11.5, 38],
+          popupAnchor: [3, -41],
+        }),
+        few: L.icon({
+          iconUrl: 'images/yellow.png',
+          iconRetinaUrl: 'images/yellow@2x.png',
+          iconSize: [28, 45],
+          iconAnchor: [11.5, 38],
+          popupAnchor: [3, -41],
+        }),
+        one: L.icon({
+          iconUrl: 'images/orange.png',
+          iconRetinaUrl: 'images/orange@2x.png',
+          iconSize: [28, 45],
+          iconAnchor: [11.5, 38],
+          popupAnchor: [3, -41],
+        }),
+        none: L.icon({
+          iconUrl: 'images/red.png',
+          iconRetinaUrl: 'images/red@2x.png',
+          iconSize: [28, 45],
+          iconAnchor: [11.5, 38],
+          popupAnchor: [3, -41],
+        }),
+        missing: L.icon({
+          iconUrl: 'images/red.png',
+          iconRetinaUrl: 'images/red@2x.png',
+          iconSize: [28, 45],
+          iconAnchor: [11.5, 38],
+          popupAnchor: [3, -41],
+        }),
+      };
+      
+      // Load bikes layer
+      createBikesLayer(true);
+
+      // Swap areas
+      function goToCity() {
+        var e = document.getElementById("query");
+        fsUrl = e.options[e.selectedIndex].value;
+        // Get new layer and zoom
+        
+        var t1 = new Date();
+        L.esri.get(fsUrl, {}, function(response){
+          var t2 = new Date();
+          alert("Took this long to get extent" + (t2.getTime() - t1.getTime())/1000);
+          var p = L.esri.Util.extentToBounds(response.extent).getCenter();
+          map.panTo([p.lng,p.lat]);
+          createBikesLayer(true);
+        });
+      }
+
+      function createBikesLayer(findBikes) {
+        if (fl) {
+          map.removeLayer(fl.cluster);
+          map.removeLayer(fl);
+        }
+
+        // create a new cluster layer
+        fl = L.esri.clusteredFeatureLayer(fsUrl, {
+          cluster: new L.MarkerClusterGroup({
+            spiderfyOnMaxZoom:false,
+            disableClusteringAtZoom: 16, //16
+            showCoverageOnHover: false,
+            iconCreateFunction: function(cluster) {
+              var count = cluster.getChildCount();
+              var digits = (count+"").length;
+              return new L.DivIcon({
+                html: count,
+                className:"cluster digits-"+digits,
+                iconSize: null
+              });
+            }
+          }),
+
+          createMarker: function (geojson, latlng) {
+            var icon;
+
+            if (findBikes) {
+              icon = getBikeInfo(geojson.properties.bikes);
+            } else {
+              icon = getBikeInfo(geojson.properties.free);
+            }
+
+            function getBikeInfo(info) {
+              info = info ? Number(info) : 0;
+              var type;
+              if (info >= 10) // green
+                type = "plenty"; 
+              else if (info < 10 && info >1) // yellow
+                type = "few"; 
+              else if (info == 1) // orange
+                type = "one";
+              else if (info == 0) // red
+                type = "none";
+              else
+                type = "none";
+              return type;
+            }
+
+            return L.marker(latlng, {
+              icon: icons[icon]
+            });
+            
+          },
+
+          onEachMarker: function(geojson, marker) {
+            if (findBikes) {
+              marker.bindPopup("<h3>"+geojson.properties.name+"</h3><p>Bikes Available: "+geojson.properties.bikes)+"</p>";
+            } else {
+              marker.bindPopup("<h3>"+geojson.properties.name+"</h3><p>Docks Free: "+geojson.properties.free+"</p>");
+            }
+          }
+        });
+
+        fl.addTo(map);
+      }
+
+      
+    </script>
+  </body>
+</html>
