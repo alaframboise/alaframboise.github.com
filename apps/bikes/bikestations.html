@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>World Bike Stations</title>
+    <title>World Bike Finder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Load Leaflet from their CDN -->
@@ -37,9 +37,7 @@
     <!-- Define some additional styles for the clusters, you'll see these classes later -->
     <style>
 
-      .cluster {
-        width: 30px;
-        height: 30px;
+ /*     .cluster {
         margin-left: 5px;
         margin-top: 5px;
         text-align: center;
@@ -97,10 +95,63 @@
       }
 
       .green {
-        background-color: rgba(150, 228, 131, 1); /*rgba(181, 226, 140, 1)*/
+        background-color: rgba(150, 228, 131, 1); 
         border: 5px solid rgba(150, 228, 131, 0.5);       
       }
+*/
 
+      .cluster-red {
+        background-color: rgba(231, 97, 54, .7);  
+/*        border: 5px solid rgba(231, 97, 54, .6); */  
+      }
+      .cluster-red div {
+        background-color: rgba(251, 97, 54, .4);  
+ /*       border: 5px solid rgba(231, 97, 54, .4);  */   
+      }
+
+      .cluster-orange {
+        background-color: rgba(250, 154, 65, .7);  
+/*        border: 5px solid rgba(250, 154, 65, .4);  */   
+      }
+      .cluster-orange div {
+        background-color: rgba(255, 154, 65, .4);
+/*        border: 5px solid rgba(250, 154, 65, .4); */      
+      }
+
+      .cluster-yellow {
+        background-color: rgba(241, 211, 87, 0.6);  
+/*        border: 5px solid rgba(241, 211, 87,.5);*/
+      }
+      .cluster-yellow div {
+        background-color: rgba(261, 211, 87, .4); 
+/*        border: 5px solid rgba(241, 211, 87,.5);*/
+      }
+
+      .cluster-green {
+        background-color: rgba(150, 228, 131, .6); 
+      }
+      .cluster-green div {
+        background-color: rgba(180, 228, 131, .4); 
+/*        border: 5px solid rgba(150,228,131, .4);*/
+      }
+
+      .cluster {
+        background-clip: padding-box;
+        border-radius: 30px;
+      }
+      .cluster div {
+        width: 40px;
+        height: 40px;
+       /* margin-left: 5px;
+        margin-top: 5px;*/
+        text-align: center;
+        border-radius: 20px;
+        font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+      }
+
+      .cluster span {
+        line-height: 40px;
+      }
 
     </style>
   </head>
@@ -229,9 +280,9 @@
                 color = "green"; 
               else if (bikeData < 10 && bikeData > 3) // yellow
                 color = "yellow"; 
-              else if (bikeData <= 3 && bikeData > 1) // orange
+              else if (bikeData <= 3 && bikeData >= 1) // orange
                 color = "orange";
-              else if (bikeData == 0) // red
+              else if (bikeData < 1) // red
                 color = "red";
               else
                 color = "red";
@@ -239,8 +290,9 @@
 
               return new L.DivIcon({
                 //html: count,
-                html: bikeData,
-                className:"cluster digits-"+digits+" "+color,
+                html: "<div><span>"+bikeData+"</span></div>",
+                //className:"cluster digits-"+digits+" "+color,
+                className:"cluster cluster-"+color,
                 iconSize: null
               });
             }
@@ -262,9 +314,9 @@
                 type = "plenty"; 
               else if (bikeData < 10 && bikeData > 3) // yellow
                 type = "few"; 
-              else if (bikeData <= 3 && bikeData > 1) // orange
+              else if (bikeData <= 3 && bikeData >= 1) // orange
                 type = "one";
-              else if (bikeData == 0) // red
+              else if (bikeData < 1) // red
                 type = "none";
               else
                 type = "none";
