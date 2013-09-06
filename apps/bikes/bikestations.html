@@ -97,8 +97,8 @@
       }
 
       .green {
-        background-color: rgba(131, 231, 105, 1); /*rgba(181, 226, 140, 1)*/
-        border: 5px solid rgba(131, 231, 105, 0.5);       
+        background-color: rgba(150, 228, 131, 1); /*rgba(181, 226, 140, 1)*/
+        border: 5px solid rgba(150, 228, 131, 0.5);       
       }
 
 
@@ -227,9 +227,9 @@
               var color;
               if (bikeData >= 10) // green
                 color = "green"; 
-              else if (bikeData < 10 && bikeData >1) // yellow
+              else if (bikeData < 10 && bikeData > 3) // yellow
                 color = "yellow"; 
-              else if (bikeData == 1) // orange
+              else if (bikeData <= 3 && bikeData > 1) // orange
                 color = "orange";
               else if (bikeData == 0) // red
                 color = "red";
@@ -255,16 +255,16 @@
               icon = getBikeInfo(geojson.properties.free);
             }
 
-            function getBikeInfo(info) {
-              info = info ? Number(info) : 0;
+            function getBikeInfo(bikeData) {
+              bikeData = bikeData ? Number(bikeData) : 0;
               var type;
-              if (info >= 10) // green
+              if (bikeData >= 10) // green
                 type = "plenty"; 
-              else if (info < 10 && info >1) // yellow
+              else if (bikeData < 10 && bikeData > 3) // yellow
                 type = "few"; 
-              else if (info == 1) // orange
+              else if (bikeData <= 3 && bikeData > 1) // orange
                 type = "one";
-              else if (info == 0) // red
+              else if (bikeData == 0) // red
                 type = "none";
               else
                 type = "none";
