@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Bike Stations</title>
+    <title>World Bike Stations</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- Load Leaflet from their CDN -->
@@ -52,8 +52,6 @@
         height: 28px;
         width: 28px;
         line-height: 28px;
-        background-color: rgba(181, 226, 140, 1);   
-        border: 5px solid rgba(181, 226, 140, 0.5); 
         border-radius: 28px;   
       }
 
@@ -62,8 +60,6 @@
         height: 34px;
         width: 34px;
         line-height: 35px;
-        background-color: rgba(241, 211, 87, 1);  
-        border: 5px solid rgba(241, 211, 87,  0.5);  
         border-radius: 34px;     
       }
 
@@ -73,8 +69,6 @@
         width: 47px;
         line-height: 47px;
         border-width: 5px;
-        background-color: rgba(241, 128, 23, 1);       
-        border: 5px solid rgba(241, 128, 23, 0.5); 
         border-radius: 48px;      
       }
 
@@ -84,17 +78,36 @@
         width: 64px;
         line-height: 64px;
         border-width: 5px;
-        background-color: rgba(241, 128, 23, 1);       
-        border: 5px solid rgba(241, 128, 23, 0.5); 
-        border-radius: 64px;         
+        border-radius: 64px;
       }
+
+      .red {
+        background-color: rgba(231, 97, 54, 1);       
+        border: 5px solid rgba(231, 97, 54, 0.5); 
+      }
+
+      .orange {
+        background-color: rgba(241, 128, 23, 1);       
+        border: 5px solid rgba(241, 128, 23, 0.5);  
+      }
+
+      .yellow {
+        background-color: rgba(241, 211, 87, 1);  
+        border: 5px solid rgba(241, 211, 87,  0.5);  
+      }
+
+      .green {
+        background-color: rgba(131, 231, 105, 1); /*rgba(181, 226, 140, 1)*/
+        border: 5px solid rgba(131, 231, 105, 0.5);       
+      }
+
 
     </style>
   </head>
   <body>
     <div id="map"></div>
     <div class="demo-controls">
-      <h1 class="title expand" id="title" onclick="showControls();">Bike Stations</h1>
+      <h1 class="title expand" id="title" onclick="showControls();">World Bike Finder</h1>
       <div class="control-container hide" id="controlContainer">
         <select class="select" id="query" onchange="goToCity();">
           <!--option>Near Me</option-->
@@ -105,12 +118,12 @@
           <option value="http://geonode.geeknixta.com/citybikes/rest/services/citycycle/FeatureServer/0">Brisbane</option>
           <option value="http://geonode.geeknixta.com/citybikes/rest/services/mejorenbici/FeatureServer/0">Buenos Aires</option>
         </select>
-        <button class="btn" id="findBikes" onclick="createBikesLayer(true);">Find</button>
-        <button class="btn" id="returnBikes" onclick="createBikesLayer(false);">Return</button>
+        <button class="btn" id="findBikes" onclick="searchBikes(true);">Find</button>
+        <button class="btn" id="returnBikes" onclick="searchBikes(false);">Return</button>
       </div>
     </div>
     <script>
-      var map = L.map('map').setView([40.696, -73.977], 15);
+      var map = L.map('map').setView([40.716, -73.977], 13);
 
       // Add ArcGIS Online basemap
       L.esri.basemapLayer("Gray").addTo(map);
@@ -120,6 +133,8 @@
 
       // Feature and Cluster layer
       var fl;
+
+      var searchForBikes = true;
 
       // Define some icons that represent our bus stops
       var icons = {
@@ -161,7 +176,13 @@
       };
       
       // Load bikes layer
-      createBikesLayer(true);
+      createBikesLayer();
+
+      // Toggle bikes and docks
+      function searchBikes(bikes) {
+        searchForBikes = bikes;
+        createBikesLayer();
+      }
 
       // Swap areas
       function goToCity() {
@@ -171,13 +192,12 @@
         L.esri.get(fsUrl, {}, function(response){
           var b = L.esri.Util.extentToBounds(response.extent); 
           map.fitBounds(b);
-          createBikesLayer(true);
+          createBikesLayer();
         });
       }
 
-      function createBikesLayer(findBikes) {
+      function createBikesLayer() {
         if (fl) {
-          //map.removeLayer(fl.cluster);
           map.removeLayer(fl);
         }
 
@@ -188,11 +208,39 @@
             disableClusteringAtZoom: 16, //16
             showCoverageOnHover: false,
             iconCreateFunction: function(cluster) {
-              var count = cluster.getChildCount();
-              var digits = (count+"").length;
+              //var count = cluster.getChildCount();
+              //var digits = (count+"").length;
+             
+              // Get bike data
+              var markers = cluster.getAllChildMarkers();
+              var digits = (markers.length+"").length;
+
+              var bikeData = 0;
+              for (var i = 0; i < markers.length; i++) {
+                if (searchForBikes) {
+                  bikeData = bikeData + Number(markers[i].properties.bikes);
+                } else {
+                  bikeData = bikeData + Number(markers[i].properties.free);
+                }
+              }
+
+              var color;
+              if (bikeData >= 10) // green
+                color = "green"; 
+              else if (bikeData < 10 && bikeData >1) // yellow
+                color = "yellow"; 
+              else if (bikeData == 1) // orange
+                color = "orange";
+              else if (bikeData == 0) // red
+                color = "red";
+              else
+                color = "red";
+
+
               return new L.DivIcon({
-                html: count,
-                className:"cluster digits-"+digits,
+                //html: count,
+                html: bikeData,
+                className:"cluster digits-"+digits+" "+color,
                 iconSize: null
               });
             }
@@ -201,7 +249,7 @@
           createMarker: function (geojson, latlng) {
             var icon;
 
-            if (findBikes) {
+            if (searchForBikes) {
               icon = getBikeInfo(geojson.properties.bikes);
             } else {
               icon = getBikeInfo(geojson.properties.free);
@@ -230,11 +278,14 @@
           },
 
           onEachMarker: function(geojson, marker) {
-            if (findBikes) {
+            if (searchForBikes) {
               marker.bindPopup("<h3>"+geojson.properties.name+"</h3><p>Bikes Available: "+geojson.properties.bikes)+"</p>";
             } else {
               marker.bindPopup("<h3>"+geojson.properties.name+"</h3><p>Docks Free: "+geojson.properties.free+"</p>");
             }
+            marker.properties = {};
+            marker.properties.bikes = geojson.properties.bikes
+            marker.properties.free = geojson.properties.free
           }
         });
 
