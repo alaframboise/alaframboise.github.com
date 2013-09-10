@@ -41,7 +41,7 @@
 					<h1>ESRI:</h1>
 					<h3>Going Open With GitHub</h3>
 					<p>
-						<small>Created by <a href="http://developers.arcgis.com">Allan Laframboise</a> / <a href="http://twitter.com/al_laframboise">@Al_Laframboise</a></small>
+						<small><a href="http://developers.arcgis.com">Allan Laframboise</a> / <a href="http://twitter.com/al_laframboise">@Al_Laframboise</a></small>
 					</p>
 				</section>
 
@@ -63,22 +63,22 @@
 				</section>
 				<section>
 					<p>
-						developers
+						community
 					</p>
 				</section>
 
 				<section>
 					<p>
-						"Why don't we put some of these projects on GitHub?"
+						<blockquote>"Why don't we put this stuff on GitHub?"</blockquote>
 					</p>
 				</section>
 
 				<section>
 					<h2>Today - Esri on GitHub</h2>
-					<p class="fragment">Planned</p>
-					<p class="fragment">Implemented</p>
-					<p class="fragment">Executed</p>
-					<p class="fragment">Tips and Tricks</p>
+					<p class="fragment">Plan</p>
+					<p class="fragment">Implement</p>
+					<p class="fragment">Execute</p>
+					<p class="fragment">Challenges</p>
 				</section>
 
 				<section>
@@ -113,19 +113,19 @@
 						<p>So what did we do?</p>
 					</section>
 					<section>
-						<h2>assembled a team</h2>
+						<h2>team</h2>
 					</section>
 					<section>
-						<h2>Corporate buy-off</h2>
+						<h2>buy-off</h2>
 					</section>
 					<section>
 						<h2>GitHub organization</h2>
 					</section>
 					<section>
-						<h2>uploaded projects</h2>
+						<h2>workflows</h2>
 					</section>
 					<section>
-						<h2>testing workflows</h2>
+						<h2>projects</h2>
 					</section>
 				</section>
 
@@ -156,17 +156,17 @@
 					</section>
 					<section>
 						<h2>Private</h2>
-						<p>Monthly fee.</p>
+						<p>Monthly plan.</p>
 					</section>
 				</section>	
 				
 				<section>
-					<h2>Private?</h2>
+					<h2>Private</h2>
 					<p class="fragment">learn platform</p>
 					<p class="fragment">work-flows</p>
-					<p class="fragment">train</p>
 					<p class="fragment">incubation</p>
 				</section>
+
 
 				<section>
 					<section>
@@ -186,53 +186,95 @@
 						</ol>
 					</section>
 					<section>
-						<h2>Caution: Admin Teams</h2>
-						<p>Add, remove and transfer repos!</p>
+						<a class="image" href="" target="_blank">
+							<img src="images/teamsize.png" alt="readme">
+						</a>
 					</section>
 					<section>
-						<h2>Caution: Transfer</h2>
-						<p>Re-assign owner and team!</p>
-					</section>
-					<section>
-						<a class="image" href="https://github.com/Esri/quickstart-map-js" target="_blank">
+						<a class="image" href="" target="_blank">
 							<img src="images/teams.png" alt="readme">
 						</a>
 					</section>
 					<section>
-						<h2>Tip: One "Big Team"</h2>
-						<p class="fragment">Add all members</p>
-						<p class="fragment">Add all private repos</p>
+						<p>What happens when you transfer a repo?</p>
+						<p class="fragment">Lose ownership</p>
+					</section>
+					<section>
+						<p>How can members see all private repos?</p>
+						<p class="fragment">All Members Team</p>
+					</section>
+					
+					<section>
+						<p>How do you contact all members?</p>
+							<pre class="fragment">
+								<code data-trim contenteditable>
+GET /teams/:id/members
+[
+  {
+    "login": "octocat",
+    "id": 1,
+    "avatar_url": "https://github.com/images/error/octocat_happy.gif",
+    "gravatar_id": "somehexcode",
+    "url": "https://api.github.com/users/octocat"
+  }
+]
+
+GET /users/:user
+{
+  ...
+  "email": "mrbob@esri.com",
+  ...
+}
+							</code>
+						</pre>
 					</section>
 				</section>
 
 				<section>
-					<p>work-flow (insert diagram)</p>
-				</section>
-
-				<section>
-					<h2>Standards</h2>
-					<p class="fragment">There are none!</p>
+					<p>Publishing Workflow</p>
+					<a class="image" href="" target="_blank">
+							<img width="500" src="images/workflow1.png" alt="readme">
+						</a>
 				</section>
 
 				<section>
 					<section>
-						<p>the repo</p>
+						<p>Git is not easy to use... at first...</p>
+					</section>
+					<section>
+						<p>Tutorials</p>
+					</section>
+					<section>
+						<p>Videos</p>
+					</section>
+					<section>
+						<h2>Tools</h2>
+						<p>SourceTree</p>
+					</section>
+
+				</section>
+
+				<section>
+					<section>
+						<p>Standards</p>
+					</section>
+					<section>
+						<h2>There are none!</h2>
+					</section>
+					<section>
+						<p>The Repo</p>
 					</section>
 					<section>
 						<h2>Name</h2>
 						<p class="fragment">repo-name-language</p>
-						<p class="fragment">"arcgis" reserved</p>
-						<p class="fragment">e.g. quickstart-map-js</p>
 						<p class="fragment">e.g. arcgis-flex-viewer</p>
+						<p class="fragment">e.g. quickstart-map-js</p>
 					</section>
 					<section>
 						<h2>Description</h2>
 						<p class="fragment"><140 characters</p>
 						<p class="fragment">e.g. ArcGIS JavaScript mapping app to get you started fast.</p>
 					</section>
-				</section>
-
-				<section>
 					<section>
 						<p>README.md</p>
 					</section>
@@ -262,48 +304,63 @@
 				
 				<section>
 					<section>
-						<p>contributions</p>
+						<p>Contributions</p>
 					</section>
 					<section>
-						<h2>Tip: Single Contributions REPO</h2>
-						<p>You are free to contribute to this repo.  See repo guidelines <a>here</a>.</p>
-					</section>
-					<section>
-						<h2>CONTRIBUTION.md</h2>
-						<p>Guidelines</p>
+						<h2>Contribution REPO</h2>
+						<p>Contribute</p>
 						<p>Issues</p>
 						<p>Licensing</p>
 					</section>
 					<section>
-						<h2>Pull Request</h2>
-						<a class="image fragment" href="https://github.com/Esri/quickstart-map-js" target="_blank">
-						<img height="500" src="images/readme.png" alt="readme">
+					<h2>Contribution.md</h2>
+						<pre class="fragment"><code data-trim contenteditable>
+Esri welcomes contributions from anyone and everyone. Please see our 
+[guidelines for contributing](https://github.com/esri/contributing).
+						</code></pre>
+					</section>
+					<section>
+						<a href="" target="_blank">
+						<img height="500" src="images/contributing.png" alt="readme">
 						</a>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<p>licensing</p>
+						<p>Pull Requests</p>
 					</section>
 					<section>
-						<h2>Apache2</h2>
-						<p>Distribution and Usage</p>
+						<h2>Work-flow</h2>
+						<ol>
+							<li>Fork on GitHub</li>
+							<li>Commit to Branch</li>
+							<li>Pull request to Upstream</li>
+							<li>Merge upstream</li>
+						</ol>
 					</section>
 					<section>
-						<h2>Copyrights</h2>
-						<p>Rights to retain</p>
-					</section>
-					<section>
-						<pre>
-Esri License here...
-						</pre>
+						<a href="" target="_blank">
+						<img height="400" src="images/workflow2.png" alt="readme">
+						</a>
 					</section>
 				</section>
 
 				<section>
 					<section>
-						<h2>Tip: Viewing Live apps</h2>
+						<p>Support</p>
+					</section>
+					<section>
+						<h2>email hooks</h2>
+						<p class="fragment">issues, comments, pull requests</p>
+						<p class="fragment">receive notification</p>
+						<p class="fragment">action</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p>viewing live apps</p>
 					</section>
 					<section>
 						<h2>hosting</h2>
@@ -314,15 +371,14 @@ Esri License here...
 
 				<section>
 					<section>
-						<p>esri.github.com</p>
+						<p>Your Web Presence</p>
+					</section>
+						<section>
+						<h2>Free Domain!</h2>
+						<p>esri.github.io</p>
 					</section>
 					<section>
-						<a class="image" href="http://esri.github.com" target="_blank">
-						<img height="500" src="images/esrigithub.png" alt="esrigithub">
-						</a>
-					</section>
-					<section>
-					<h2>Tip: GitHub API</h2>
+						<p>Dynamic Build</p>
 						<pre><code data-trim contenteditable>
 require "json"
 require "yaml"
@@ -334,13 +390,17 @@ require "erb"
 @repo_array = JSON.parse(RestClient.get(@base_url+"/orgs/esri/repos?type=public&page=1&per_page=100", content_type: :json))
 @repo_array = @repo_array.sort_by {|a| a["watchers_count"]}
 
-# Get README.md info and tags
 @repos ||= @repo_array.collect! do |repo|
 if !repo["name"].nil?
-	# Get the repo content
+	# Get repo info
+	repo_name = repo["name"]
+	repo_desc = repo["description"]
+	repo_likes = repo["likes"]
+	repo_forks = repo["forks"]
+
+	# Extract README.md Esri tags  	
 	uri = URI(@base_url+"/repos/Esri/" + repo["name"] + "/contents/README.md")
 	repo_readme = RestClient.get(uri.to_s, content_type: :json)
-	# Extract Esri tags  
 	if !repo_readme.nil?
 		repo_readme = JSON.parse(repo_readme)		
 		content = Base64.decode64(repo_readme["content"])
@@ -354,48 +414,111 @@ if !repo["name"].nil?
 end
 						</code></pre>
 					</section>
-					
+					<section>
+						<h2>Language Detection</h2>
+						<pre><code data-trim contenteditable>
+README.md
+...
+[](Esri Tags: ArcGIS Web Mapping Leaflet)
+[](Esri Language: JavaScript)
+						</code></pre>
+					</section>
+					<section>
+						<a class="image" href="http://esri.github.com" target="_blank">
+						<img height="500" src="images/esrigithub.png" alt="esrigithub">
+						</a>
+					</section>		
+					<section>
+						<p>Yes, GitHub is new for some people!</p>
+					</section>
 				</section>
 			
+					
 				<section>
 					<section>
-						<p>Support</p>
+						<p>Projects</p>
 					</section>
 					<section>
-						<h2>Tip: email hooks</h2>
-						<p class="fragment">receive notification</p>
-						<p class="fragment">action</p>
-						<p class="fragment">issues, pull requests...</p>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<p>OS Projects</p>
+						<h2>Flex Viewer</h2>
+						<div class="fragment">
+							<p>ArcGIS GIS web client</p>
+							<p>Complete Source code</p>
+							<p>Very active</p>
+						</div>
 					</section>
 					<section>
-						<h2>ArcGIS Flex Viewer</h2>
-						<p class="fragment">Popular map viewer</p>
+						<h2>geocoder widget</h2>
+						<div class="fragment">
+							<p>ArcGIS JavaScript source</p>
+							<p>Geosearch place finding</p>
+							<p>Easy to customize</p>
+						</div>
 					</section>
 					<section>
 						<h2>Terraformer</h2>
-						<p class="fragment">GeoJSON library</p>
+						<div class="fragment">
+							<p>JavaScript Geo library</p>
+							<p>GeoJSON, ArcGIS JSON, WKT</p>
+							<p>Geospatial operations</p>
+						</div>
 					</section>
 					<section>
 						<h2>esri-leaflet</h2>
-						<p class="fragment">ArcGIS Basemaps</p>
-						<p class="fragment">ArcGIS Services</p>
+						<div class="fragment">
+							<p>Light-weight JS mapping framework</p>
+							<p>ArcGIS basemaps</p>
+							<p>ArcGIS feature and map services</p>
+						</div>
 					</section>
 					<section>
-						<h2>hadoop</h2>
-						<p class="fragment">...</p>
-						<p class="fragment">...</p>
+						<h2>geoportal Server</h2>
+						<div class="fragment">
+							<p>Catalog geospatial resources</p>
+							<p>Discovery tool</p>
+							<p>Metadata</p>
+						</div>
 					</section>
 					<section>
-						<h2>geometry-java</h2>
-						<p class="fragment">...</p>
-						<p class="fragment">...</p>
+						<h2>Local Government Add-ins</h2>
+						<div class="fragment">
+							<p>Water Utility Network Editing</p>
+							<p>Address Data Management</p>
+							<p>Special Event Planning</p>
+							<p>Capital Planning</p>
+						</div>
 					</section>
+					<section>
+						<h2>GIS Tools for Hadoop</h2>
+						<div class="fragment">
+							<p>Big data spatial analyses</p>
+							<p>Geoprocessing tools</p>
+							<p>geometry-api-java</p>
+						</div>
+					</section>
+					<section>
+						<h2>Products</h2>
+						<p>arcgis-viewer-flex-builder</p>
+						<p>arcgis-osm-editor</p>
+					</section>
+					<section>
+						<h2>Apps, Widgets and Templates</h2>
+						<p>quick start-map-js</p>
+						<p>dojo-bootstrap-ui-for-maps-js</p>
+						<p>basic-storytelling-template-js</p>
+					</section>
+					<section>
+						<h2>Industry</h2>
+						<p>election-polling-places</p>
+						<p>citizen-service-request</p>
+						<p>offline-and-routing-data-collection-ios</p>
+					</section>
+					<section>
+						<h2>GeoTools</h2>
+						<p>geoservices-js</p>
+						<p>node-geoservices-adaptor</p>
+						<p>koop</p>
+					</section>
+				
 				</section>
 
 				<section>
@@ -425,7 +548,7 @@ end
 						<p>In the end...</p>
 					</section>
 					<section>
-						<h2>Two GitHub organizations</h2>
+						<h2>Two GitHub implementations</h2>
 					</section>
 					<section>
 						<h2>&gt;200 software engineers</h2>
@@ -437,13 +560,19 @@ end
 						<h2>GitHub Enterpise</h2>
 					</section>
 					<section>
-						<h2>=</h2>
+						<h2>Collaboration</h2>
+					</section>
+					<section>
+						<h2>Sharing</h2>
 					</section>
 					<section>
 						<h2>GeoSpatial Collaboration Maximus!</h2>
 					</section>
 				</section>
 				
+				<section>
+						<p>You can do it too!</p>
+				</section>
 
 
 				<!-- STOP -->
