@@ -43,6 +43,9 @@
 					<p>
 						<small><a href="http://developers.arcgis.com">Allan Laframboise</a> / <a href="http://twitter.com/al_laframboise">@Al_Laframboise</a></small>
 					</p>
+
+					<p><small><a href="alaframboise.github.com/presentations/esrigithub">alaframboise.github.com/presentations/esrigithub</a></small></p>
+
 				</section>
 
 				<section>
@@ -116,6 +119,7 @@
 					</section>
 					<section>
 						<h2>team</h2>
+						<img width="600" src="images/admin.jpg" alt="readme">
 					</section>
 					<section>
 						<h2>buy-off</h2>
@@ -389,7 +393,6 @@ require "erb"
 
 # Get repos - Limited to 5000 requests per hour
 @repo_array = JSON.parse(RestClient.get(@base_url+"/orgs/esri/repos?type=public&page=1&per_page=100", content_type: :json))
-@repo_array = @repo_array.sort_by {|a| a["watchers_count"]}
 
 @repos ||= @repo_array.collect! do |repo|
 if !repo["name"].nil?
@@ -644,6 +647,11 @@ README.md
 					<p><small><a href="alaframboise.github.com/presentations/esrigithub">alaframboise.github.com/presentations/esrigithub</a></small></p>
 				</section>
 
+			</div>
+
+			<div style="position: absolute; text-align: center; bottom:0; width:100%; height:20px; background-color: #fff;">
+				<img style="margin-right: 5px; height: 12px; margin-bottom: 15px;" src="images/foss4g2013-logo.png"> | 
+				<img style="margin-left: 5px; height: 20px; margin-bottom: 12px;" src="images/logo-esri.png">
 			</div>
 
 		</div>
