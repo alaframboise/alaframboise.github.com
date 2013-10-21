@@ -5,37 +5,36 @@
   <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">   
   <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
   <title>alaframboise.github.com</title>
-  <!--link rel="stylesheet" type="text/css" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3/js/esri/css/esri.css">
-  <script src="http://serverapi.arcgisonline.com/jsapi/arcgis/3.3compact"></script-->
-  <!-- Load my JavaScript and CSS -->
-  <!--link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
-  <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet"-->
+  
   <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/bootstrap-responsive.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.6/js/esri/css/esri.css">
+  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
   <style type="text/css">
     html, body {
-      width: 100%;
-      height: 100%;
       margin: 0;
       padding: 0;
       font-family: "Lucida Grande","Seoge UI","Arial",sans-serif;
       font-size: 14px;
       line-height: 20px;
       color: #666;
-      background-color: #fff;
     }
 
     #mapDiv {
+      position: absolute;
       width: 100%;
-      height: 105px;
-      margin: 0;
-      padding: 0;
+      height: 100%;
+      top:0px;
+      z-index: -1;
     }
+
+    .well {
+      background-color: rgba(245, 245, 245, 0.5);
+    }
+
   </style>
 
   <!-- Load the library references for ArcGIS API for JavaScript -->
-  <script src="http://js.arcgis.com/3.6compact"></script>
+  <script src="http://js.arcgis.com/3.7compact"></script>
   <script>
     require(["esri/map", 
       "dojo/domReady!"], 
@@ -50,7 +49,8 @@
     </script>
 </head>
   <body>
-    <div class="container-fluid">
+    <div id="mapDiv"></div>
+    <div class="container">
     	<br/>
 
       <!--div class="row-fluid">
@@ -60,20 +60,14 @@
         <div class="span3"><img src="images/IMG_0327.JPG" class="img-rounded"></div>
       </div-->
     
-			<div class="row-fluid">
+			<div class="row well">
         <div class="span12" style="text-align: center;">
 				  <h3>alaframboise.github.com</h3>
           <a href="http://github.com/alaframboise"><h5>That's nice. Now show me code...</h5></a>
         </div>
       </div>
 
-      <div class="row-fluid">
-        <div class="span12">
-           <div id="mapDiv"></div>
-        </div>
-      </div>
-
-      <div class="row-fluid">
+      <div class="row well">
         <div class="span12" style="text-align: center;">
           <p><h3>Presentations</h3></p>
           <p><a href="/presentations/esrigithub/">Esri: Going Open with GitHub</a></p>
@@ -98,6 +92,8 @@
 
 
 		</div>
+
+
 		<br/>
 		<script src="http://code.jquery.com/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
