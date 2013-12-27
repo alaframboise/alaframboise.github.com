@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Directions</title>
+  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+  <link rel="stylesheet" href="../../css/examples.css">
+
+  <!-- Load the library references for ArcGIS API for JavaScript -->
+  <script src="http://js.arcgis.com/3.8compact"></script>
+  <script>
+    require(["esri/map", 
+      "esri/tasks/locator", 
+      "esri/tasks/RouteTask", 
+      "esri/tasks/RouteParameters", 
+      "esri/tasks/FeatureSet", 
+      "esri/SpatialReference",
+      "esri/units", 
+      "esri/graphic", 
+      "esri/symbols/SimpleLineSymbol", 
+      "esri/InfoTemplate", 
+      "../../js/oauth/oAuthHelper.js", 
+      "../../js/utils.js", 
+      "dojo/promise/all",
+      "dojo/on", 
+      "dojo/dom", 
+      "dojo/domReady!"], 
+      function(Map, Geocode, Directions, RouteParameters, FeatureSet, SpatialReference, Units, Graphic, SimpleLineSymbol, InfoTemplate, oAuthHelper, utils, all, on, dom) {     
+        "use strict"    
+        var geocodeService;
+        var directionsService;
+        var directions;
+        var directionsList;
+        var segmentGraphic;
+
+        // Create the map
+        var map = new Map("mapDiv",{ 
+            basemap: "streets",
+            center: [-117, 34],
+            zoom: 5
+        });
+
+        utils.setPopup(map, "top", -1, 34);
+        utils.autoRecenter(map);
+
+        // Create oAuthHelper 
+        oAuthHelper.init({
+          appId:      "if7hHDRDdyRbz0fs",
+          //redirect_uri: "http://localhost/GitHub/quickstart-map-js/js/oAuth/oauth-callback.html",  // local testing only
+          redirect_uri: "http://esri.github.io/quickstart-map-js/js/oauth/oauth-callback.html",
+          portal:     "http://www.arcgis.com",
+          expiration: (14 * 24 * 60), // 2 weeks, in minutes
+          popup:      true
+        });
+        
+        function signIn() {
+          if (oAuthHelper.isSignedIn()) {
+            geocodeAddresses();
+          } else {
+            oAuthHelper.signIn().then( function(){
+              geocodeAddresses();
+            });
+          }          
+        }
+        
+        // Create geocode service
+        geocodeService = new Geocode("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+        on(geocodeService, "error", errorHandler);
+        
+        // Create directions service
+        //directionsService = new Directions("http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route");  // this will expire
+        directionsService = new Directions("http://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World");  // new ArcGIS Services
+        on(directionsService, "solve-complete", showRoute);
+        on(directionsService, "error", errorHandler);
+        
+        // Container for directions
+        directionsList = dom.byId('directionsList')
+
+        // Wire UI Events
+        on(dom.byId("addressInputA"),"keypress", placeInput_onKeyPress); 
+        on(dom.byId("addressInputB"),"keypress", placeInput_onKeyPress); 
+        on(dom.byId("btnFindAddress"),"click", getDirections); 
+        on(dom.byId("btnClear"),"click", clearDirectionGraphics); 
+       
+        // Find directions for Start and Stop addresses/places
+        function getDirections() {
+          signIn();
+        }
+        
+        // Geocode first
+        function geocodeAddresses() {
+          // Geocode address A and B
+          var options = {address:{"SingleLine":dom.byId('addressInputA').value}};
+          var geocodeAddressACallback = geocodeService.addressToLocations(options);       
+          options = {address:{"SingleLine":dom.byId('addressInputB').value}};
+          var geocodeAddressBCallback = geocodeService.addressToLocations(options);
+          // When A and B come back, create the route
+          all([geocodeAddressACallback.promise,geocodeAddressBCallback.promise]).then(calculateDirections);
+          utils.setStyle("progress","progress visible");
+        }
+
+        // Create route and add graphics
+        function calculateDirections(geocodeResults) {
+          // Get the geocode candidates
+          var start = geocodeResults[0][0];
+          var stop = geocodeResults[1][0];
+          
+          if (!start || !stop) {
+            utils.setStyle("progress","progress hidden");
+            alert("Sorry, " + (!start ? "Start": "End") + " address not found! Please try again.");
+            return;
+          } else {
+            // Clear old graphics
+            map.graphics.clear();
+            segmentGraphic = null;
+            //Setup the route parameters 
+            var routeParams = new RouteParameters();
+                routeParams.returnRoutes = false;
+                routeParams.returnDirections = true;
+                routeParams.directionsLengthUnits = Units.MILES;
+                routeParams.outSpatialReference = map.spatialReference;
+                routeParams.stops = new FeatureSet();
+                
+            // Add the graphics to define route stops
+            var startGraphic = addPtGraphic("Start",start);
+            var stopGraphic = addPtGraphic("End",stop);
+            routeParams.stops.features[0] = startGraphic;
+            routeParams.stops.features[1] = stopGraphic;
+            
+            //use the routing task to create a shortest path between those two located address points
+            directionsService.solve(routeParams);
+          }
+        }
+        
+        // Draw the route on the map and show directions
+        function showRoute(results) {
+          var routeInfo = results.result;  // 3.5
+          if (routeInfo) {
+            if (routeInfo.routeResults && routeInfo.routeResults.length > 0) {
+              directions = routeInfo.routeResults[0].directions;
+              //  Add route to map
+              addLineGraphic(directions.mergedGeometry,[255, 0, 0, 0.5],null,null,true);
+              // Zoom to route
+              map.setExtent(directions.mergedGeometry.getExtent().expand(2.0));
+              // Show turn-by-turn directions
+              showDirections(directions);
+            }
+          }
+          else {
+            alert("Could not find route.");
+          }
+          utils.setStyle("progress", "progress hidden");
+        }
+        
+        function errorHandler(error) {
+          utils.setStyle("progress", "progress hidden");
+          alert("Address not found.");
+        }
+        
+        function addPtGraphic(type,place) {
+          var symbol;
+          if (type == "Start")
+              symbol = utils.createPictureSymbol("../../images/GreenCircle36.png", 6, 15, 27); 
+          else
+              symbol = utils.createPictureSymbol("../../images/RedCircle36.png", 6, 15, 27); 
+          // Add graphic to map 
+          var attributes = { address:place.address, score:place.score, lat:place.location.y.toFixed(2), lon:place.location.x.toFixed(2) };   
+          var infoTemplate = new InfoTemplate(type,"${address}<br/>Latitude: ${lat}<br/>Longitude: ${lon}<br/>Score: ${score}<span class='popupZoom' onclick='zoomToPlace(" + place.location.x.toFixed(2) + "," + place.location.y.toFixed(2) + ",15)';>Zoom To</span>");
+          var graphic = new Graphic(place.location,symbol,attributes,infoTemplate);
+          map.graphics.add(graphic);        
+          if (graphic.getDojoShape()){
+              graphic.getDojoShape().moveToFront();
+          }
+          return graphic;
+        }
+        
+        function addLineGraphic(line,color,title,text,moveToBack) {
+          var symbol = new SimpleLineSymbol().setColor(new dojo.Color(color)).setWidth(4);
+          var infoTemplate;
+          if (title && text)
+            infoTemplate = new InfoTemplate(title,text);
+          var graphic = new Graphic(line,symbol,null,infoTemplate);
+          map.graphics.add(graphic);  
+          
+          if (graphic.getDojoShape()){
+            if (graphic && moveToBack)
+              graphic.getDojoShape().moveToBack();
+            else
+              graphic.getDojoShape().moveToFront();
+          }
+          return graphic;
+        }
+
+        function zoomToPlace(lon,lat,scale) {
+          map.centerAndZoom([lon,lat],scale);
+        }
+        
+        // Display turn-by-turn directions
+        function showDirections(directions) {
+          var dirStrings = [];
+          for (var i = 0; i < directions.features.length; i++) {
+              var feature = directions.features[i];
+              if (i == 0 || i == directions.length -1)
+                  feature.attributes.text = feature.attributes.text;
+              else
+                  feature.attributes.text = feature.attributes.text + " (" + feature.attributes.length.toFixed(2) + " miles)";
+              dirStrings.push("<li id=item" + i + " class='info-item' onmouseover='window.selectDirection(" + i + ",false);' onmousedown='window.selectDirection(" + i + ",true);'><a>" +feature.attributes.text + "</a></li>");
+          }
+           directionsList.innerHTML = dirStrings.join("");
+           var lbl = dom.byId("infoTotals");
+           lbl.innerHTML = formatDistance(directions.totalLength, "mile(s)") + " " + formatTime(directions.totalTime);
+           
+           utils.setStyle("infoPanel", "info-panel visible");
+           utils.setStyle("mapDiv","map infoPosition");
+           map.resize();
+        }
+
+        // Highlight and zoom to route segment
+        window.selectDirection = function selectDirection(index, zoom) {
+          if (index > -1) {
+            var segment = directions.features[index];
+            var title = "Direction: " + (Number(index) + 1);
+            var text = segment.attributes.text;
+            // Create segment graphic);
+            if (!segmentGraphic) {
+                segmentGraphic = addLineGraphic(segment.geometry,[0, 255, 0, 0.7],title,text,false);
+            } else {
+                segmentGraphic.setGeometry(segment.geometry);
+            }
+            // Show popup
+            map.infoWindow.setTitle(title);
+            map.infoWindow.setContent(text);
+            map.infoWindow.show(segment.geometry.getPoint(0, 0));
+            if (zoom)
+                map.centerAt(segment.geometry.getPoint(0, 0), map.getLevel());
+          }
+        }
+        
+        // Listen for enter key
+        function placeInput_onKeyPress(e) {
+            if (e.keyCode == 13 || e.keyCode == "13") {
+                getDirections();
+            }
+        }
+        
+        //Format the time as hours and minutes
+        function formatTime(time) {
+          var hr = Math.floor(time / 60), //Important to use math.floor with hours
+              min = Math.round(time % 60);
+          if (hr < 1 && min < 1) {
+            return "";
+          }
+          else if (hr < 1) {
+            return min + " min(s)";
+          }
+
+          return hr + " hr " + min + " min";
+        }
+
+        //Round the distance to the nearest hundredth of a unit
+        function formatDistance(dist, units) {
+          var d = Math.round(dist * 100) / 100;
+          if (d === 0) {
+            return "";
+          }
+          return d + " " + units;
+        }
+
+        function clearDirectionGraphics() {
+            utils.setStyle("progress", "progress hidden");
+            utils.setStyle("infoPanel", "info-panel hidden");
+            utils.setStyle("mapDiv","map");
+            map.resize();
+            directionsList.innerHTML = "";
+            map.infoWindow.hide();
+            map.graphics.clear();
+            segmentGraphic = null;
+        }
+      
+      }
+    );
+  </script>
+</head>
+<body>
+  <div class="panel">
+    <div class="titlearea"><span id="titleMessage" class="title-message">Directions</span></div>
+    <div class="controls">
+      <div class="buttons"> 
+        <label>Start:</label> <input id="addressInputA" class="input-medium" type="text" value="San Francisco, CA" placeholder="San Francisco, CA"/></br>
+        <label>End:</label> <input id="addressInputB" class="input-medium" type="text" value="Redlands, CA" placeholder="Redlands, CA"/></br>
+        <button id="btnFindAddress" class="btn btn-primary">Go</button>
+        <button id="btnClear" class="btn">Clear</button>
+      </div>
+      <p>NOTE: This app uses advanced ArcGIS services and OAuth.  Please <a href="https://developers.arcgis.com/en/sign-up">sign up</a> for a free <a href="https://developers.arcgis.com/en/sign-up">ArcGIS Developer Subscription</a> to run this sample.</p>
+    </div>
+    <div id="infoPanel" class="info-panel hidden">
+      <span id="infoLabel" class="info-label">Results:</span>
+      <span id="infoTotals" class="info-totals"></span>
+      <ol id="directionsList" class="info-list"></ol>
+    </div>
+  </div>
+  <div id="mapDiv"></div>
+  <div id="progress" class="progress hidden"></div>
+  <div id="signIn"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Graphics Toolbar</title> 
+  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+  <link rel="stylesheet" href="../../css/examples.css">
+  <!-- Load the library references for ArcGIS API for JavaScript -->
+  <script src="http://js.arcgis.com/3.8compact"></script>
+  <script>
+    require(["esri/map", 
+      "esri/toolbars/draw", 
+      "esri/symbols/SimpleMarkerSymbol", 
+      "esri/symbols/SimpleLineSymbol", 
+      "esri/symbols/CartographicLineSymbol", 
+      "esri/graphic", 
+      "../../js/utils.js", 
+      "dojo/_base/Color", 
+      "dojo/on", 
+      "dojo/_base/connect", 
+      "dojo/dom", 
+      "dojo/domReady!"], 
+      function(Map, Draw, SimpleMarkerSymbol, SimpleLineSymbol, CartographicLineSymbol, Graphic, utils, color, on, conn, dom) {
+        "use strict"
+
+        var tb; 
+        
+        // Create map
+        var map = new Map("mapDiv", {
+          basemap: "streets",
+          center: [-122.31, 47.67],
+          zoom: 8
+        });
+        utils.autoRecenter(map);
+
+        // Wire events
+        on(map, "load", initToolbar);
+        // Wire UI events
+        on(dom.byId("btnAddPoint"),"click", setActiveTool);
+        on(dom.byId("btnAddLine"),"click", setActiveTool);
+        on(dom.byId("btnAddPolygon"),"click", setActiveTool);
+        on(dom.byId("btnClear"),"click", setActiveTool);
+        
+        // Load the drawing toolbar widget
+        function initToolbar() {
+          tb = new Draw(map);
+          // Do something after graphics are sketched on the map 
+          conn.connect(tb, "onDrawEnd", addGraphic);
+          // Override the default marker symbol
+          tb.markerSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 7, 
+            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new color([255,0,0]), 1), 
+            new color([255,0,0,1]));
+        }
+
+        // Set the active draw tool and lock the map
+        function setActiveTool(btn) {
+          var esriToolType = btn.currentTarget.id;
+          switch (esriToolType) {
+            case "btnAddPoint":
+              esriToolType = Draw.POINT;
+              break;
+            case "btnAddLine":
+              esriToolType = Draw.POLYLINE;
+              break;
+            case "btnAddPolygon":
+              esriToolType = Draw.POLYGON;
+              break;
+            default:
+              esriToolType = null;
+          }
+
+          if (esriToolType) {
+            tb.activate(esriToolType);  // Example type - Draw.POINT
+            map.disablePan();
+            map.disableDoubleClickZoom();
+          } else {
+            tb.deactivate();  
+            map.enablePan();
+            map.enableDoubleClickZoom();
+            map.graphics.clear(); 
+          }
+        }
+
+        // Add the graphic with symbol
+        function addGraphic(geometry) {
+          var symbol = dom.byId("symbol").value;
+          if (symbol) {
+            symbol = eval(symbol);
+          } else {
+            switch (geometry.type) {
+              case 'point':
+                symbol = tb.markerSymbol;
+                break;
+              case 'polyline':
+                symbol = tb.lineSymbol;
+                break;
+              case 'polygon':
+                symbol = tb.fillSymbol;
+                break;
+              default:
+            }
+          }
+          map.graphics.add(new Graphic(geometry, symbol));
+        }
+      }
+    );
+  </script>
+</head>
+<body>
+  <div class="panel">
+    <div class="titlearea"><span id="titleMessage" class="title-message">Draw Graphics Widget</span></div>
+      <div class="controls">
+        <div class="buttons">
+        <button id="btnAddPoint" class="btn btn-primary">Add Point</button>
+        <button id="btnAddLine" class="btn btn-primary">Add Line</button>
+        <button id="btnAddPolygon" class="btn btn-primary">Add Poly</button>
+        <select class="select-medium" id="symbol">
+          <option value="">--- Symbol Options ---</option>
+          <option value="">--- Point ---</option>
+          <option value="new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_SQUARE, 7, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new color([255,0,0]), 1), new color([255,0,0,1]))">Default</option>
+          <option value="new SimpleMarkerSymbol().setColor(new color([0, 0, 255]))">Circle</option>
+          <option value="new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_DIAMOND, 20, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new color([0,0,0]), 1), new color([255,255,0,0.5]))">Diamond</option>
+          <option value="">--- Simple Line ---</option>
+          <option value="new SimpleLineSymbol()">Default</option>
+          <option value="new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASH, new color([255,0,0]), 3)">Dash</option>
+          <option value="new SimpleLineSymbol(SimpleLineSymbol.STYLE_DOT, new color([255,0,0]), 5)">Dot</option>
+          <option value="">--- Cartographic Line Symbols ---</option>
+          <option value="new CartographicLineSymbol()">Default</option>
+          <option value="new CartographicLineSymbol(CartographicLineSymbol.STYLE_SOLID, new color([255,0,0]), 10, CartographicLineSymbol.CAP_ROUND, CartographicLineSymbol.JOIN_ROUND)">Solid, round cap, round join</option>
+          <option value="new CartographicLineSymbol(CartographicLineSymbol.STYLE_SOLID, new color([255,0,0]), 10, CartographicLineSymbol.CAP_SQUARE, CartographicLineSymbol.JOIN_BEVEL)">Solid, square cap, bevel join</option>
+        </select>
+        <button id="btnClear" class="btn">Clear</button>
+      </div>
+    </div>
+  </div>
+  <div id="mapDiv"></div>
+</div>        
+</body>
+</html>

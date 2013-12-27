@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Directions Widget</title>
+  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+  <link rel="stylesheet" href="../../css/examples.css">
+  <!-- Load the library references for ArcGIS API for JavaScript -->
+  <script src="http://js.arcgis.com/3.8compact"></script>
+  <script>
+    require(["esri/map", 
+      "esri/dijit/Directions", 
+      "../../js/utils.js", 
+      "dojo/domReady!"], 
+      function(Map, Directions, utils) {         
+       
+        // Create map
+        var map = new Map("mapDiv", {
+          basemap: "streets",
+          center:[-98.56,39.82],
+          zoom: 4
+        });
+        utils.autoRecenter(map);
+
+        // Create Directions widget - NOTE: The routeTaskUrl service will be expiring at the end of 2013 and should be replaced 
+        // with the world network service that requires an ArcGIS account to access
+        var directions = new Directions({
+          map: map,
+          routeTaskUrl: "http://tasks.arcgisonline.com/ArcGIS/rest/services/NetworkAnalysis/ESRI_Route_NA/NAServer/Route"
+        },"dir");
+        directions.startup();
+      }
+    );
+  </script>
+</head>
+<body>
+  <div class="panel">
+    <div class="titlearea"><span id="titleMessage" class="title-message">Directions Widget</span></div>
+    <div class="controls">
+      <div id="dir"></div>
+    </div>
+  </div>
+  <div id="mapDiv"></div>
+  <div id="progress" class="progress hidden"></div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Auto Center</title>
+  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.8/js/esri/css/esri.css">
+  <link rel="stylesheet" href="../../css/examples.css">   
+  <!-- Load the library references for ArcGIS API for JavaScript-->
+  <script src="http://js.arcgis.com/3.8compact"></script>
+  <script>
+    require(["esri/map",
+      "esri/InfoTemplate", 
+      "esri/geometry/Point", 
+      "esri/graphic", 
+      "../../js/utils.js", 
+      "dojo/on", 
+      "dojo/dom", 
+      "dojo/domReady!"], 
+      function(Map, InfoTemplate, Point, Graphic, utils, on, dom) {
+        "use strict"
+        // Create map
+        var map = new Map("mapDiv",{ 
+            basemap: "streets",
+            center: [-100, 53],
+            zoom: 3
+        });
+        autoRecenter(map);
+        // Wire events
+        on(map, 'load', showGeolocation);
+
+        function showGeolocation() {
+          if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(showLocation, errorHandler);
+          } else {
+            alert("Sorry, your browser doesn't support geolocation.");      
+          }
+        }
+
+        function showLocation(position) {
+          clearGeolocationGraphics();
+          // Create a point
+          var pt = new Point(position.coords.longitude,position.coords.latitude);
+          // Create a symbol and pop-up template and add the graphic to the map
+          var symbol = utils.createPictureSymbol("../../images/blue-pin.png", 0, 10, 24); //0, 10, 24
+          var attributes = {"lat":pt.y.toFixed(2),"lon":pt.x.toFixed(2)};
+          var infoTemplate = new InfoTemplate("My Geolocation","Latitude: ${lat} <br/>Longitude: ${lon}");
+          var graphic = new Graphic(pt,symbol,attributes,infoTemplate);
+          map.graphics.add(graphic);
+          // Show pop-up
+          map.infoWindow.setTitle("My Geolocation");
+          map.infoWindow.setContent(graphic.getContent());
+          map.infoWindow.show(pt);
+          // Position the map
+          map.centerAndZoom(pt,13);
+        }
+
+        function errorHandler(err) {
+          if(err.code == 1) {
+            alert("Error: Access is denied!");
+          } else if ( err.code == 2) {
+            alert("Error: Position is unavailable!");
+          } else 
+            alert("Error: " + err);
+        }
+      
+        function clearGeolocationGraphics() {
+          map.infoWindow.hide();
+          map.graphics.clear();       
+        }
+
+        // Recenter the map when the window changes size
+        function autoRecenter(map) {
+          var resizeDelay = 100;
+          on(map, 'load', function (map) {
+            on(window, 'resize', map, map.resize);
+          });
+          on(map, 'resize',  function(extent, width, height) { 
+            map.__resizeCenter = map.extent.getCenter();
+            setTimeout(function() {
+              if (document.getElementById("useAutoCenter").checked) {
+                map.centerAt(map.__resizeCenter);                
+              }
+            }, resizeDelay);
+          });
+        }
+      }
+    );
+  </script>
+</head>
+<body>
+<div>
+  <div class="panel">
+  <div class="titlearea"><span id="titleMessage" class="title-message">Map with Auto Centering</span></div>
+    <div class="controls">
+       <div class="buttons"> 
+        <label><input id="useAutoCenter" type="checkbox" checked/>Use Auto Center</label> 
+      </div>
+    </div>
+  <div class="message"><span id="userMessage" class="user-message">Resize the browser. Try without centering.</span></div>
+
+  </div>
+
+  </div>
+  <div id="mapDiv"></div>
+  <div id="progress" class="progress hidden"></div>
+</body>
+</html>
