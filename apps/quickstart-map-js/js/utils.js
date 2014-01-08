@@ -16,19 +16,21 @@ define(["esri/map","esri/symbols/PictureMarkerSymbol","esri/dijit/Popup", "dojo/
 	    },
 	    setPopup:function(map,anchorPos,xOffset,yOffset) {
         var popup = new Popup({anchor:anchorPos, offsetX:xOffset, offsetY:yOffset}, dojo.create("div"));
-        popup.startupDijits();
+        //popup.startupDijits();
         map.infoWindow = popup;
 				//map.infoWindow.set("highlight", false);
 				popup.domNode.style.marginLeft = xOffset+"px";
+				popup.domNode.style.marginBottom = yOffset+"px";
+
 	    },
-			createPictureSymbol:function(url, xOffset, yOffset, size) {
+			createPictureSymbol:function(url, xOffset, yOffset, size, width) {
 	      return new PictureMarkerSymbol(
 	      {
 	          "angle": 0,
 	          "xoffset": xOffset, "yoffset": yOffset, "type": "esriPMS",
 	          "url": url,  
 	          "contentType": "image/png",
-	          "width":size, "height": size
+	          "width":width, "height": size
 	      });
 	    },
       setSelected:function (button) {
