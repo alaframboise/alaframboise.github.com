@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JSON Content</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css">
+  <style>
+    body{
+     /* font-family: "Arial Unicode MS, Arial, sans-serif";*/
+      width: 100%
+      height: 100%;
+    }
+    #content {
+        width: 100%; height: 400px;
+      /*width: 100%; height: 100%; padding: 5px; overflow: auto;
+      border: solid 2px #AAAAAA; background-color: #FFFFFF;
+      -moz-border-radius: 5px; -webkit-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px;
+      -moz-box-shadow: 0 0 0.5em black; -webkit-box-shadow: 0 0 0.5em black; -o-box-shadow: 0 0 0.5em black; box-shadow: 0 0 0.5em black;*/
+    }
+    .failure { color: red; }
+    #status { font-size: 12px; }
+    .map {
+      width:100%;
+      height:100%;
+    }
+  </style>
+
+  <script src="http://alaframboise.github.io/terraformer-apps/terraformer.js" type="text/javascript"></script>
+  <script src="http://alaframboise.github.io/terraformer-apps/examples/lib/terraformer-arcgis-parser.js" type="text/javascript"></script>
+  <script src="http://alaframboise.github.io/terraformer-apps/examples/lib/terraformer-wkt-parser.js"></script>
+  
+  <script src="http://js.arcgis.com/3.10/"></script>
+
+  <script>
+    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json",  "esri/urlUtils", "esri/config", "esri/request",  "dojo/query", "esri/map", "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol", "dojo/_base/Color", "esri/InfoTemplate", "dojo/domReady!"],
+        
+        function (dom, on, domClass, dojoJson, urlUtils, esriConfig, esriRequest, query, Map, SimpleFillSymbol, SimpleLineSymbol, Color, InfoTemplate) {
+
+        // Request Part - I
+
+        // esriConfig.defaults.io.proxyUrl = "/proxy";
+    
+        //dom.byId("url").value = "http://70.167.184.246:8080/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:bavw_parcels&maxFeatures=50&outputFormat=json";
+        dom.byId("url").value = "./ib.json";
+        dom.byId("content").value = "";
+
+        //handle the Go button's click event
+        on(dom.byId("submitRequest"), "click", getContent);
+
+        function getContent() {
+
+          var contentDiv = dom.byId("content");
+          contentDiv.value = "";
+          domClass.remove(contentDiv, "failure");
+          dom.byId("status").innerHTML = "Downloading...";
+
+          //get the url 
+          var url = urlUtils.urlToObject(dom.byId("url").value);
+  
+
+          var requestHandle = esriRequest({
+            "url": url.path,
+            "content": url.query
+            //,
+            // // "handeAs": "json",
+            // "url": dom.byId("url").value,
+            //"callbackParamName": "jsoncallback"
+          });
+          requestHandle.then(requestSucceeded, requestFailed);
+        }
+
+        function requestSucceeded(response, io){
+          dom.byId("status").innerHTML = "";
+          dojoJson.toJsonIndentStr = "  ";
+          dom.byId("content").value = dojoJson.toJson(response, true);
+
+          // Add to map!
+          // adding geojson (from wms server) to map
+          showGeoJSON(response);
+
+        }
+        function requestFailed(error, io){
+
+          domClass.add(dom.byId("content"), "failure");
+          dom.byId("status").innerHTML = "";
+
+          dojoJson.toJsonIndentStr = " ";
+          dom.byId("content").value = dojoJson.toJson(error, true);
+        }
+
+        // Part II - Add to map
+        var map = new esri.Map("map", {
+            basemap: "topo",
+            center: [-122, 45],
+            zoom: 6
+        });
+
+        var hullOutline = new esri.symbol.SimpleLineSymbol("dash",new dojo.Color([47,140,212]), 2);
+        var boundsOutline = new esri.symbol.SimpleLineSymbol("dash",new dojo.Color([212,125,47]), 2);
+        var hullSymbol = new esri.symbol.SimpleFillSymbol("solid", hullOutline, new dojo.Color([195,229,255,0.5]));
+        var boundsSymbol = new esri.symbol.SimpleFillSymbol("solid", boundsOutline, new dojo.Color([255,215,180,0.5]));
+
+        var currentPrimitive;
+        var shape;
+
+        // Add GeoJSON
+        function showGeoJSON(geojson){
+        // convert the geojson object to a arcgis json representation
+        currentPrimitive = new Terraformer.Primitive(geojson);
+        var arcgis = Terraformer.ArcGIS.convert(currentPrimitive);
+            for (var i=0; i < arcgis.length; i++){
+              addGraphic(arcgis[i], new Color([255,255,0,0.25]),"GeoJSON");
+            }
+        }
+
+        // Add WKT
+        function showWKT(wkt){
+        currentPrimitive = Terraformer.WKT.parse(wkt);
+        var arcgis = Terraformer.ArcGIS.convert(currentPrimitive);
+        addGraphic(arcgis, new Color([255,0,255,0.25]),"WKT");
+        }
+
+        // Add ArcGIS JSON
+        function showArcGIS(arcgis){
+        currentPrimitive = Terraformer.ArcGIS.parse(arcgis);
+        addGraphic(arcgis, new Color([0,255,255,0.25]),"ArcGIS JSON");
+        }
+
+        function getSymbol(color) {
+        var sfs = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+        new Color([255,0,0, .5]), 2), color);
+        return sfs;
+        }
+
+        function addGraphic(arcgis,color,type){
+            // if arcgis.geometry is set we have a graphic json
+            // else we can create our own json and set the symbol on it.
+            if(arcgis.geometry){
+              shape = new esri.Graphic(arcgis).setSymbol(getSymbol(color));
+            } else {
+              shape = new esri.Graphic({
+                geometry: arcgis
+              }).setSymbol(getSymbol(color));
+            }
+
+            var infoTemplate = new InfoTemplate();
+            infoTemplate.setTitle(type);
+            infoTemplate.setContent("This was converted from text!");
+            shape.setInfoTemplate(infoTemplate);
+
+            // add the graphic to the map
+            map.graphics.add(shape);
+
+            // center the map on the graphic
+            map.setExtent(shape.geometry.getExtent().expand(1.5));
+
+            map.infoWindow.hide();
+            //map.setExtent(map.graphics.getExtent().expand(1.2));
+        }
+
+
+    });
+  </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+              <h2>Load IB GeoJSON from Geo Server</h2>
+               <p>
+               <form  class="form-inline">
+                    <input type="text" disabled="true" id="url" size="100"/ class="form-control">
+                    <input id="submitRequest" type="button" value="GO" class="btn btn-success" />
+                    <span id="status"></span>
+                </form>
+              </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <textarea id="content"></textarea>
+            </div>
+            <div class="col-xs-8">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
