@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">   
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>alaframboise.github.com</title>
+  
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
+  <style type="text/css">
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: "Lucida Grande","Seoge UI","Arial",sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      color: #666;
+      height: 100%;
+    }
+
+    #mapDiv {
+      position: absolute;
+      width: 100%;
+      height: 300px;
+      top:0px;
+      z-index: -1;
+    }
+
+    .well {
+      background-color: transparent;
+      border: transparent;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow:none;
+    }
+
+  </style>
+
+  <!-- Load the library references for ArcGIS API for JavaScript -->
+  <script src="http://js.arcgis.com/3.12compact"></script>
+  <script>
+    require(["esri/map", 
+      "dojo/domReady!"], 
+      function(Map, dom) {
+        // Create map
+        var map = new Map("mapDiv",{ 
+          basemap: "darkgray",
+          center: [-122.69, 45.52],
+          zoom: 3
+        });
+      });
+    </script>
+</head>
+  <body>
+    <div class="container">
+
+      <!--div class="row-fluid">
+        <div class="span3"><img src="images/IMG_0426.JPG" class="img-rounded"></div>
+        <div class="span3"><img src="images/IMG_0457.JPG" class="img-rounded"></div>
+        <div class="span3"><img src="images/IMG_0149.JPG" class="img-rounded"></div>
+        <div class="span3"><img src="images/IMG_0327.JPG" class="img-rounded"></div>
+      </div-->
+
+      <div class="row">
+          <div id="mapDiv"></div>
+      </div>
+    
+			<div class="row well">
+        <div class="span12" style="text-align: center;">
+				  <h3>alaframboise.github.com</h3>
+          <a href="http://github.com/alaframboise"><h5>That's nice. Now show me code...</h5></a>
+        </div>
+      </div>
+
+      <div class="row well">
+        <div class="span12" style="text-align: center;">
+          <p><h3>Presentations</h3></p>
+          <!-- <p><a href="/presentations/esrigithub/">Esri: Going Open with GitHub</a></p> -->
+<!--           <p><a href="/presentations/devsummituk/App-Dev-Open-Source.pdf">App Dev with Open Source from a space capsule</a></p>
+-->
+
+          <p><a href="http://www.slideshare.net/aGISGuy/building-responsive-web-mobile-mapping-applications">Designing and Developing Responsive Mapping Apps - European and Esri UC 2014</a></p>
+
+           <p><a href="http://www.slideshare.net/aGISGuy/esri-opensourceprojectsongit-hub">Esri Open Source projects on GitHub</a></p>
+<!--           <p><a href="/presentations/esrifordevs/">Esri for Devs</a></p>
+ -->          
+          <p><h3>GeoDev Meetups</h3></p>
+          <p><a href="/presentations/geodevmeetups/portland11-10-14.html">Portland Nov 10th</a></p>
+         <!--  <p><h3>Map Camp Hackathon</h3></p>
+          <p><a href="http://esrisf.maps.arcgis.com/home/group.html?owner=allanSFHack&title=Map%20Camp#">Map Camp ArcGIS Online Group)</a></p>
+          <p><a href="http://pin13.net/car2go/">Car2Go Data</a></p>
+       -->
+          <p><h3>Geo Apps</h3></p>
+          <p><a href="https://github.com/Esri/quickstart-map-js">Quickstart Map JS</a></p>          
+          <p><a href="https://github.com/Esri/bootstrap-map-js">Bootstrap Map JS</a></p>          
+          <p><a href="http://alaframboise.github.com/apps/bikes/">World Bike Finder</a></p>
+          <p><a href="http://alaframboise.github.com/terraformer-apps/examples/browser/index.html">Terraformer Apps</a></p>
+          <p><a href="http://esri.github.io">esri.github.io</a></p>
+
+          <p><h3>Dev to Dev 2015</h3></p>
+          <p><a href="https://www.slideshare.net/aGISGuy/esri-map-app-builders">Esri Map App Builders Slides</a></p>
+          
+          <p><a href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=cbd4334062ec48ac93cc59408098ef97#">SF Neighborhood Map</a></p>
+          <p><a href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=1d7bbee66a79478fb59a62f0f1dce715">SF Neighborhood Stationary Cyclists 3D</a></p>
+          
+          <p><a href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=b9ba04d69d1e4fa28eb30ce1b50cd039">SF Saftest Bike Routes Map 2D</a></p>
+          <p><a href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=180fcdda2fc54b23ae66c1a693b07f5f">SF Saftest Bike Routes Map 3D</a></p>
+
+          <p><a href="http://edn.maps.arcgis.com/apps/PublicInformation/index.html?appid=c41e9689d31b4b0fa8236e28064d1358">SF Saftest Bike Routes Template App</a></p>
+          <p><a href="http://edn.maps.arcgis.com/apps/webappviewer/index.html?id=2997125f213d45119cb4de3ea54190e2">SF Saftest Bike Routes WAB App</a></p>
+
+          <p><a href="http://jsbin.com/vutemu/3/edit">SF Saftest Bike Routes - ArcGIS API</a></p>
+          <p><a href="http://jsbin.com/tawufe/11/edit?html,output">SF Saftest Bike Routes - Esri-Leaflet</a></p>
+
+
+          
+
+        </div>
+      </div>
+
+      <!--div class="row-fluid">
+        <div class="span6"><img src="images/IMG_0426.JPG" class="img-rounded"></div>
+        <div class="span6"><img src="images/IMG_0457.JPG" class="img-rounded"></div>
+      </div-->
+
+
+      <!--div class="row-fluid">
+        <div class="span6"><img src="http://alaframboise.github.com/images/IMG_0149.JPG" class="img-rounded"></div>
+        <div class="span6"><img src="http://alaframboise.github.com/images/IMG_0327.JPG" class="img-rounded"></div>
+      </div-->
+
+
+		</div>
+
+
+		<br/>
+		<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

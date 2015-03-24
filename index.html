@@ -1,140 +1,303 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=7,IE=9">   
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
-  <title>alaframboise.github.com</title>
-  
-  <link href="css/bootstrap.css" rel="stylesheet">
-  <link href="css/bootstrap-responsive.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.7/js/esri/css/esri.css">
-  <style type="text/css">
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: "Lucida Grande","Seoge UI","Arial",sans-serif;
-      font-size: 14px;
-      line-height: 20px;
-      color: #666;
-      height: 100%;
-    }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+    <meta charset="utf-8">
+    <title>alaframboise.github.io</title>
+    <meta name="generator" content="Bootstrap-map-resources" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    #mapDiv {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top:0px;
-      z-index: -1;
-    }
+    <link rel="shortcut icon" href="http://esri.github.io/bootstrap-map-js/demo/images/favicon.ico">
 
-    .well {
-      background-color: transparent;
-      border: transparent;
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow:none;
-    }
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap-map-js -->
+    <!-- <link rel="stylesheet" type="text/css" href="http://esri.github.io/bootstrap-map-js/src/css/bootstrapmap.css">    -->
+
+    <link href="http://jsdev.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
+
+    <style type="text/css">
+
+      html,body {
+        margin: 0;
+        padding: 0;
+/*        padding-top: 20px;*/
+        height: 100%;
+        background-color: black;
+      }
+
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+
+      .navbar-inverse .navbar-brand {
+        color: #fff;
+      }
+
+      .hero {
+        position: absolute;
+        bottom: 0;
+        color: #f3f3f3;
+        text-align: center;
+        width: 100%
+      }
+
+      
+      /* CUSTOMIZE THE NAVBAR
+      -------------------------------------------------- */
+
+      /* Special class on .container surrounding .navbar, used for positioning it into place. */
+      .navbar-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 29;
+      }
+
+      .navbar-container {
+        z-index: 100;
+        color: #f3f3f3;
+      }
+      .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+        color: #fff;
+        background-color: #1E2F71;
+      }
+
+      /* RESPONSIVE CSS
+      -------------------------------------------------- */
+
+      @media (min-width: 768px) {
+
+       .navbar-container {
+          padding-right: 35px;
+          padding-left: 35px;
+        }
+
+        /* Navbar positioning foo */
+        .navbar-wrapper {
+          margin-top: 20px;
+          margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+        }
+        /* The navbar becomes detached from the top, so we round the corners */
+        .navbar-wrapper .navbar {
+          border-radius: 4px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .esriSimpleSliderTL {
+          top: 65px;
+        }
+
+        .navbar-container {
+          margin-right: 0;
+          margin-left: 0;
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+        h3 {
+          font-size: 15px;
+        }
+     
+      }
 
   </style>
 
-  <!-- Load the library references for ArcGIS API for JavaScript -->
-  <script src="http://js.arcgis.com/3.7compact"></script>
-  <script>
-    require(["esri/map", 
-      "dojo/domReady!"], 
-      function(Map, dom) {
-        // Create map
-        var map = new Map("mapDiv",{ 
-          basemap: "gray",
-          center: [-122.69, 45.52],
-          zoom: 3
-        });
-      });
-    </script>
-</head>
-  <body>
-    <div id="mapDiv"></div>
-    <div class="container">
-    	<br/>
+  </head>
 
-      <!--div class="row-fluid">
-        <div class="span3"><img src="images/IMG_0426.JPG" class="img-rounded"></div>
-        <div class="span3"><img src="images/IMG_0457.JPG" class="img-rounded"></div>
-        <div class="span3"><img src="images/IMG_0149.JPG" class="img-rounded"></div>
-        <div class="span3"><img src="images/IMG_0327.JPG" class="img-rounded"></div>
-      </div-->
+  <body class="dark">
+    <div class="navbar-wrapper">
+      <div class="container navbar-container">
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="navbar-header"> <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </a>
+                <a class="navbar-brand" href="index.html" contenteditable="false">alaframboise.github.io</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown" id="">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Maps <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="myDropdown">
+                          <li><a target="" href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=cbd4334062ec48ac93cc59408098ef97#">SF Stationary Cyclists</a></li>
+                          <li><a target="" href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=1d7bbee66a79478fb59a62f0f1dce715">SF Stationary Cyclists 3D</a></li>
+                          <li><a target="" href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=b9ba04d69d1e4fa28eb30ce1b50cd039">SF Safest Bike Routes</a></li>
+                          <li><a target="" href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=180fcdda2fc54b23ae66c1a693b07f5f">SF Safest Bike Routes 3D</a></li>
+                          <li><a target="" href="http://edn.maps.arcgis.com/apps/PublicInformation/index.html?appid=c41e9689d31b4b0fa8236e28064d1358">SF Stationary Cyclists Template</a></li>
+                          <li><a target="" href="http://edn.maps.arcgis.com/apps/webappviewer/index.html?id=2997125f213d45119cb4de3ea54190e2">SF Stationary Cyclists WAB App</a></li>
+                          <li><a target="" href="http://jsbin.com/vutemu/3/edit?html,output">SF Stationary Cyclists ArcGIS JS API</a></li>
+                          <li><a target="" href="http://jsbin.com/tawufe/11/edit?html,output">SF Stationary Cyclists Esri Leaflet API</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="myDropdown">
+                          <li><a target="" href="http://alaframboise.github.io/apps/bikes/">World Bike Finder</a></li>
+                          <li><a target="" href="http://alaframboise.github.io/terraformer-apps/examples/browser/index.html">Terraformer Apps</a></li>
+                          <li><a target="" href="http://esri.github.io/gis-day-map/index.html">GIS Day</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Code <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="myDropdown">
+                            <li><a target="" href="https://github.com/Esri/quickstart-map-js">ArcGIS JS Quickstarts</a></li>
+                            <li><a target="" href="https://github.com/Esri/bootstrap-map-js">Bootstrap-map-js</a></li>
+                            <li><a target="" href="https://github.com/Esri/geojson-layer-js">ArcGIS GeoJSON Layer</a></li>
+                            <li><a target="" href="http://esri.github.io/cluster-layer-js/index.html">ArcGIS Cluster Layer</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Slides <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="myDropdown">
+                            <li><a target="" href="http://slides.com/michaelgaigg/devsummit2015/#/">DevSummit 2015 - UI and UX for Web Map Apps Part I</a></li>
+                            <li><a target="" href="http://slides.com/alaframboise/betteruianduxformappingapps-part2#/">DevSummit 2015 - UI and UX for Web Map Apps Part II</a></li>
+                            <li class="divider"></li>
+                            <li><a target="" href="http://tomwayson.github.io/responsive-citizens/index.html">Better UI and UX Design for Mapping Apps</a></li>
+                            <li><a target="" href="http://www.slideshare.net/aGISGuy/esri-map-app-builders">Esri Map App Builders</a></li>
+
+
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Meetups <b class="caret"></b></a>
+                        <ul class="dropdown-menu" id="myDropdown">
+                            <li><a target="" href="http://alaframboise.github.io/presentations/geodevmeetups/portland11-10-14.html#/0/5">Portland</a></li>
+                            <li><a target="" href="http://alaframboise.github.io/presentations/geodevmeetups/portland11-10-14.html#/0/5">Seattle</a></li>
+                            <li><a target="" href="https://geonet.esri.com/groups/geodev">GeoDev Group</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /navbar wrapper -->
+
+<!-- Bootstrap-map-js -->
+<div id="map"></div>
+
+<script src="http://jsdev.arcgis.com/4.0beta1/"></script>
+
+<script type="text/javascript">
+
+  var map, 
+    timer, 
+    fps = 15,
+    basemaps = [],
+    i = 0;
+
+  require([
+      "esri/Map",
+      "esri/layers/ArcGISTiledMapServiceLayer",
+      "esri/layers/ArcGISElevationLayer",
+
+      "dojo/dom-style",
+      "dojo/_base/fx",
+      "dojo/fx/easing",
+
+      "dojo/on", "dojo/query", "dojo/keys",
+      "dojo/dom",
+
+      "dojo/domReady!"
+  ], function(
+      Map, ArcGISTiledMapServiceLayer, ArcGISElevationLayer, domStyle, fx, easing, on, query, keys, dom
+  ) {
     
-			<div class="row well">
-        <div class="span12" style="text-align: center;">
-				  <h3>alaframboise.github.com</h3>
-          <a href="http://github.com/alaframboise"><h5>That's nice. Now show me code...</h5></a>
-        </div>
-      </div>
+    map = new Map(dom.byId("map"), {
+      viewType: "3d"
+    });
 
-      <div class="row well">
-        <div class="span12" style="text-align: center;">
-          <p><h3>Presentations</h3></p>
-          <!-- <p><a href="/presentations/esrigithub/">Esri: Going Open with GitHub</a></p> -->
-<!--           <p><a href="/presentations/devsummituk/App-Dev-Open-Source.pdf">App Dev with Open Source from a space capsule</a></p>
--->
+    basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
+    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer");
+    basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer");
+    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
+    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
+    basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
 
-          <p><a href="http://www.slideshare.net/aGISGuy/building-responsive-web-mobile-mapping-applications">Designing and Developing Responsive Mapping Apps - European and Esri UC 2014</a></p>
+    map.add(new ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"));
+    map.add(new ArcGISElevationLayer("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), 0);
 
-           <p><a href="http://www.slideshare.net/aGISGuy/esri-opensourceprojectsongit-hub">Esri Open Source projects on GitHub</a></p>
-<!--           <p><a href="/presentations/esrifordevs/">Esri for Devs</a></p>
- -->          
-          <p><h3>GeoDev Meetups</h3></p>
-          <p><a href="/presentations/geodevmeetups/portland11-10-14.html">Portland Nov 10th</a></p>
-         <!--  <p><h3>Map Camp Hackathon</h3></p>
-          <p><a href="http://esrisf.maps.arcgis.com/home/group.html?owner=allanSFHack&title=Map%20Camp#">Map Camp ArcGIS Online Group)</a></p>
-          <p><a href="http://pin13.net/car2go/">Car2Go Data</a></p>
-       -->
-          <p><h3>Geo Apps</h3></p>
-          <p><a href="https://github.com/Esri/quickstart-map-js">Quickstart Map JS</a></p>          
-          <p><a href="https://github.com/Esri/bootstrap-map-js">Bootstrap Map JS</a></p>          
-          <p><a href="http://alaframboise.github.com/apps/bikes/">World Bike Finder</a></p>
-          <p><a href="http://alaframboise.github.com/terraformer-apps/examples/browser/index.html">Terraformer Apps</a></p>
-          <p><a href="http://esri.github.io">esri.github.io</a></p>
+    map.then(function() {
+          // Prevent navigation
+          //map.view.navigationController.destroy();
 
-          <p><h3>Dev to Dev 2015</h3></p>
-          <p><a href="https://www.slideshare.net/aGISGuy/esri-map-app-builders">Esri Map App Builders Slides</a></p>
-          
-          <p><a href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=cbd4334062ec48ac93cc59408098ef97#">SF Neighborhood Map</a></p>
-          <p><a href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=1d7bbee66a79478fb59a62f0f1dce715">SF Neighborhood Stationary Cyclists 3D</a></p>
-          
-          <p><a href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=b9ba04d69d1e4fa28eb30ce1b50cd039">SF Saftest Bike Routes Map 2D</a></p>
-          <p><a href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=180fcdda2fc54b23ae66c1a693b07f5f">SF Saftest Bike Routes Map 3D</a></p>
+          animate();
+          swapMap();
+      });
 
-          <p><a href="http://edn.maps.arcgis.com/apps/PublicInformation/index.html?appid=c41e9689d31b4b0fa8236e28064d1358">SF Saftest Bike Routes Template App</a></p>
-          <p><a href="http://edn.maps.arcgis.com/apps/webappviewer/index.html?id=2997125f213d45119cb4de3ea54190e2">SF Saftest Bike Routes WAB App</a></p>
+      function animate() {
+          setTimeout( function(){
+              // Animate
+              requestAnimationFrame(animate);
+              // Move map
+              if (fps > 0) {
+                  var p = map.view.get("center");
+                  var lon = p.get("longitude");
+                  if (lon <= -180) {
+                  lon = 180;
+                  }
+                  lon = lon - .05;
+                  p.set("longitude",lon);
+                  p.z = 0;
+                  p.hasZ = true;
+                  map.view.set("center", p);
+              }
+          }, 500 / fps);
+      }
 
-          <p><a href="http://jsbin.com/vutemu/3/edit">SF Saftest Bike Routes - ArcGIS API</a></p>
-          <p><a href="http://jsbin.com/tawufe/11/edit?html,output">SF Saftest Bike Routes - Esri-Leaflet</a></p>
+      function swapMap() {
+        setInterval(function() {
+          i = (i < basemaps.length - 1) ? i + 1 : 0; 
+           fade(i);
+        }, 10000);
+      }
 
+      function fade(i) {
+        fx.fadeOut({node: query(".esriViewSurface")[0],
+          duration: 2000,
+          easing: easing.quadIn,
+          onEnd: function() {
+            // Hide
+            map.remove(0);
+            var lyr = new ArcGISTiledMapServiceLayer(basemaps[i]);
+            map.add(lyr);
+            // Show           
+            fx.fadeIn({node: query(".esriViewSurface")[0],
+              duration: 2000,
+              easing: easing.quadIn
+            }).play();
+          }
+        }).play();
+      }
 
-          
-
-        </div>
-      </div>
-
-      <!--div class="row-fluid">
-        <div class="span6"><img src="images/IMG_0426.JPG" class="img-rounded"></div>
-        <div class="span6"><img src="images/IMG_0457.JPG" class="img-rounded"></div>
-      </div-->
-
-
-      <!--div class="row-fluid">
-        <div class="span6"><img src="http://alaframboise.github.com/images/IMG_0149.JPG" class="img-rounded"></div>
-        <div class="span6"><img src="http://alaframboise.github.com/images/IMG_0327.JPG" class="img-rounded"></div>
-      </div-->
-
-
-		</div>
-
-
-		<br/>
-		<script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+      // on(document, "keydown", function(event) {
+      //     switch(event.keyCode) {
+      //       case keys.UP_ARROW:                  
+      //             fps += fps > 45 ? 0 : 5;
+      //             break;
+      //       case keys.DOWN_ARROW:
+      //             fps -= fps > 0 ? 5 : 0;
+      //             break;
+      //     }
+      // });
+       
+    });
+  </script>
+  
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+   
   </body>
 </html>
