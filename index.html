@@ -23,13 +23,12 @@
         margin: 0;
         padding: 0;
 /*        padding-top: 20px;*/
-        height: 100%;
+        /*height: 100%;*/
         background-color: black;
       }
 
-      #map {
-        width: 100%;
-        height: 100%;
+      #viewDiv {
+        padding-top: 50px;
       }
 
       .navbar-inverse .navbar-brand {
@@ -181,86 +180,90 @@
   </div>
   <!-- /navbar wrapper -->
 
-<!-- Bootstrap-map-js -->
-<div id="map"></div>
+  <!-- Bootstrap-map-js -->
+  <div id="viewDiv"></div>
 
-<script src="http://js.arcgis.com/4.0beta1/"></script>
+  <script src="http://js.arcgis.com/4.0beta1/"></script>
 
-<script type="text/javascript">
-
-  var map, 
+  <script>
+    
+    var map, view,
     timer, 
     fps = 15,
     basemaps = [],
     i = 0;
 
-  require([
+    require([
       "esri/Map",
-      "esri/layers/ArcGISTiledMapServiceLayer",
+      "esri/views/SceneView",
+      
+      "esri/layers/ArcGISTiledLayer",
       "esri/layers/ArcGISElevationLayer",
-
+      
       "dojo/dom-style",
       "dojo/_base/fx",
       "dojo/fx/easing",
-
       "dojo/on", "dojo/query", "dojo/keys",
       "dojo/dom",
-
+      
       "dojo/domReady!"
-  ], function(
-      Map, ArcGISTiledMapServiceLayer, ArcGISElevationLayer, domStyle, fx, easing, on, query, keys, dom
-  ) {
-    
-    map = new Map(dom.byId("map"), {
-      viewType: "3d"
-    });
+    ], function(Map, SceneView, ArcGISTiledLayer, ArcGISElevationLayer, domStyle, fx, easing, on, query, keys, dom) {
 
-    basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
-    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer");
-    basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
-    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer");
-    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
-    basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
-    basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+      map = new Map({
+        basemap: "streets"
+      });
 
-    map.add(new ArcGISTiledMapServiceLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"));
-    map.add(new ArcGISElevationLayer("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), 0);
+      view = new SceneView({
+        container: "viewDiv",
+        map: map,
+        scale: 50000000,
+        center: [-101.17, 21, 78]
+      });
+      
+      basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
+      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer");
+      basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer");
+      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
+      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
+      basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+      map.add(new ArcGISTiledLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"));
+      map.add(new ArcGISElevationLayer("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), 0);
 
-    map.then(function() {
+      map.then(function() {
           // Prevent navigation
           //map.view.navigationController.destroy();
-
           animate();
           swapMap();
       });
-
+      
       function animate() {
           setTimeout( function(){
               // Animate
               requestAnimationFrame(animate);
               // Move map
               if (fps > 0) {
-                  var p = map.view.get("center");
-                  var lon = p.get("longitude");
+                  var p = view.center;
+                  var lon = p.longitude;
                   if (lon <= -180) {
                   lon = 180;
                   }
                   lon = lon - .05;
-                  p.set("longitude",lon);
+                  p.longitude = lon;
                   p.z = 0;
                   p.hasZ = true;
-                  map.view.set("center", p);
+                  view.center = p;
               }
           }, 500 / fps);
       }
-
+      
       function swapMap() {
         setInterval(function() {
           i = (i < basemaps.length - 1) ? i + 1 : 0; 
            fade(i);
         }, 10000);
       }
-
+      
       function fade(i) {
         fx.fadeOut({node: query(".esriViewSurface")[0],
           duration: 2000,
@@ -268,7 +271,7 @@
           onEnd: function() {
             // Hide
             map.remove(0);
-            var lyr = new ArcGISTiledMapServiceLayer(basemaps[i]);
+            var lyr = new ArcGISTiledLayer(basemaps[i]);
             map.add(lyr);
             // Show           
             fx.fadeIn({node: query(".esriViewSurface")[0],
@@ -289,15 +292,15 @@
       //             break;
       //     }
       // });
-       
+
     });
   </script>
   
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <!--script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script-->
    
   </body>
 </html>
