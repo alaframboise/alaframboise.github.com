@@ -9,298 +9,241 @@
 
     <link rel="shortcut icon" href="http://esri.github.io/bootstrap-map-js/demo/images/favicon.ico">
 
-    <!-- Bootstrap core CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap-map-js -->
-    <!-- <link rel="stylesheet" type="text/css" href="http://esri.github.io/bootstrap-map-js/src/css/bootstrapmap.css">    -->
-
-    <link href="http://js.arcgis.com/4.0beta1/esri/css/esri.css" rel="stylesheet" type="text/css">
-
-    <style type="text/css">
-
-      html,body {
-        margin: 0;
-        padding: 0;
-/*        padding-top: 20px;*/
-        /*height: 100%;*/
-        background-color: black;
-      }
-
-      #viewDiv {
-        padding-top: 50px;
-      }
-
-      .navbar-inverse .navbar-brand {
-        color: #fff;
-      }
-
-      .hero {
-        position: absolute;
-        bottom: 0;
-        color: #f3f3f3;
-        text-align: center;
-        width: 100%
-      }
-
-      
-      /* CUSTOMIZE THE NAVBAR
-      -------------------------------------------------- */
-
-      /* Special class on .container surrounding .navbar, used for positioning it into place. */
-      .navbar-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 29;
-      }
-
-      .navbar-container {
-        z-index: 100;
-        color: #f3f3f3;
-      }
-      .navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
-        color: #fff;
-        background-color: #1E2F71;
-      }
-
-      /* RESPONSIVE CSS
-      -------------------------------------------------- */
-
-      @media (min-width: 768px) {
-
-       .navbar-container {
-          padding-right: 35px;
-          padding-left: 35px;
+    <!-- Calcite-Bootstrap -->
+    <link rel="stylesheet" href="http://esri.github.io/calcite-bootstrap/assets/css/calcite-bootstrap.css">
+    
+    <!-- Calcite-Maps -->
+    <link rel="stylesheet" href="http://esri.github.io/calcite-maps/css/calcite-maps.css">
+    <link rel="stylesheet" href="http://esri.github.io/calcite-maps/css/calcite-maps-arcgis.css">
+    <link rel="stylesheet" href="http://esri.github.io/calcite-maps/css/themes/themes.css">
+    
+    <!-- ArcGIS JS 4.0 -->
+    <link rel="stylesheet" href="http://js.arcgis.com/4.0beta1/esri/css/esri.css">
+    <link rel="stylesheet" href="http://esri.github.io/calcite-maps/demos/css/calcite-dojo-4.0.css">
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
         }
-
-        /* Navbar positioning foo */
-        .navbar-wrapper {
-          margin-top: 20px;
-          margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+        .bg-blue {
+          background-color: rgba(25, 111, 166, 0.5);
         }
-        /* The navbar becomes detached from the top, so we round the corners */
-        .navbar-wrapper .navbar {
-          border-radius: 4px;
-        }
-      }
-
-      @media (max-width: 767px) {
-        .esriSimpleSliderTL {
-          top: 65px;
-        }
-
-        .navbar-container {
-          margin-right: 0;
-          margin-left: 0;
-          padding-right: 0;
-          padding-left: 0;
-        }
-
-        h3 {
-          font-size: 15px;
-        }
-     
-      }
-
-  </style>
+    </style>
 
   </head>
 
-  <body class="dark">
-    <div class="navbar-wrapper">
-      <div class="container navbar-container">
-        <div class="navbar navbar-inverse navbar-static-top">
-            <div class="navbar-header"> <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                </a>
-                <a class="navbar-brand" href="index.html" contenteditable="false">alaframboise.github.io</a>
-            </div>
-
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown" id="">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Maps <b class="caret"></b></a>
-                        <ul class="dropdown-menu" id="myDropdown">
-                          <li><a target="" href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=cbd4334062ec48ac93cc59408098ef97#">SF Stationary Cyclists</a></li>
-                          <li><a target="" href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=1d7bbee66a79478fb59a62f0f1dce715">SF Stationary Cyclists 3D</a></li>
-                          <li><a target="" href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=b9ba04d69d1e4fa28eb30ce1b50cd039">SF Safest Bike Routes</a></li>
-                          <li><a target="" href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=180fcdda2fc54b23ae66c1a693b07f5f">SF Safest Bike Routes 3D</a></li>
-                          <li><a target="" href="http://edn.maps.arcgis.com/apps/PublicInformation/index.html?appid=c41e9689d31b4b0fa8236e28064d1358">SF Stationary Cyclists Template</a></li>
-                          <li><a target="" href="http://edn.maps.arcgis.com/apps/webappviewer/index.html?id=2997125f213d45119cb4de3ea54190e2">SF Stationary Cyclists WAB App</a></li>
-                          <li><a target="" href="http://jsbin.com/vutemu/3/edit?html,output">SF Stationary Cyclists ArcGIS JS API</a></li>
-                          <li><a target="" href="http://jsbin.com/tawufe/11/edit?html,output">SF Stationary Cyclists Esri Leaflet API</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
-                        <ul class="dropdown-menu" id="myDropdown">
-                          <li><a target="" href="http://alaframboise.github.io/apps/bikes/">World Bike Finder</a></li>
-                          <li><a target="" href="http://alaframboise.github.io/terraformer-apps/examples/browser/index.html">Terraformer Apps</a></li>
-                          <li><a target="" href="http://esri.github.io/gis-day-map/index.html">GIS Day</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Code <b class="caret"></b></a>
-                        <ul class="dropdown-menu" id="myDropdown">
-                            <li><a target="" href="https://github.com/Esri/quickstart-map-js">ArcGIS JS Quickstarts</a></li>
-                            <li><a target="" href="https://github.com/Esri/bootstrap-map-js">Bootstrap-map-js</a></li>
-                            <li><a target="" href="https://github.com/Esri/geojson-layer-js">ArcGIS GeoJSON Layer</a></li>
-                            <li><a target="" href="http://esri.github.io/cluster-layer-js/index.html">ArcGIS Cluster Layer</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Slides <b class="caret"></b></a>
-                        <ul class="dropdown-menu" id="myDropdown">
-                            <li><a target="" href="http://slides.com/michaelgaigg/devsummit2015/#/">DevSummit 2015 - UI and UX for Web Map Apps Part I</a></li>
-                            <li><a target="" href="http://slides.com/alaframboise/betteruianduxformappingapps-part2#/">DevSummit 2015 - UI and UX for Web Map Apps Part II</a></li>
-                            <li class="divider"></li>
-                            <li><a target="" href="http://tomwayson.github.io/responsive-citizens/index.html">Better UI and UX Design for Mapping Apps</a></li>
-                            <li><a target="" href="http://www.slideshare.net/aGISGuy/esri-map-app-builders">Esri Map App Builders</a></li>
-
-
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown">Meetups <b class="caret"></b></a>
-                        <ul class="dropdown-menu" id="myDropdown">
-                            <li><a target="" href="http://alaframboise.github.io/presentations/geodevmeetups/portland11-10-14.html#">Portland</a></li>
-                            <li><a target="" href="http://alaframboise.github.io/presentations/geodevmeetups/seattle 10-14-14.html#">Seattle</a></li>
-                            <li><a target="" href="https://geonet.esri.com/groups/geodev">GeoDev Group</a></li>
-                        </ul>
-                    </li>
-                </ul>
+  <body class="calcite-maps map-position-absolute nav-position-top nav-space-all zoom-top-right">
+    <div class="navbar navbar-inverse navbar-fixed-top bg-blue">
+        <div class="navbar-header"> <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </a>
+            <a class="navbar-brand">
+              <span class="glyphicon glyphicon-map-marker"></span>
+            </a>
+            <div class="navbar-info">
+                <div class="navbar-title text-overflow">alaframboise.github.io</div>
+                <div class="navbar-subtitle text-overflow">Code, presentations and other stuff</div> 
             </div>
         </div>
-    </div>
-    <!-- /container -->
-  </div>
-  <!-- /navbar wrapper -->
 
-  <!-- Bootstrap-map-js -->
-  <div id="viewDiv"></div>
+        <div id="mainNav" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown" id="">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Maps <b class="caret"></b></a>
+                    <ul class="dropdown-menu" id="myDropdown">
+                      <li><a target="" href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=cbd4334062ec48ac93cc59408098ef97#">SF Stationary Cyclists</a></li>
+                      <li><a target="" href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=1d7bbee66a79478fb59a62f0f1dce715">SF Stationary Cyclists 3D</a></li>
+                      <li><a target="" href="http://edn.maps.arcgis.com/home/webmap/viewer.html?webmap=b9ba04d69d1e4fa28eb30ce1b50cd039">SF Safest Bike Routes</a></li>
+                      <li><a target="" href="http://edn.maps.arcgis.com/home/webscene/viewer.html?webscene=180fcdda2fc54b23ae66c1a693b07f5f">SF Safest Bike Routes 3D</a></li>
+                      <li><a target="" href="http://edn.maps.arcgis.com/apps/PublicInformation/index.html?appid=c41e9689d31b4b0fa8236e28064d1358">SF Stationary Cyclists Template</a></li>
+                      <li><a target="" href="http://edn.maps.arcgis.com/apps/webappviewer/index.html?id=2997125f213d45119cb4de3ea54190e2">SF Stationary Cyclists WAB App</a></li>
+                      <li><a target="" href="http://jsbin.com/vutemu/3/edit?html,output">SF Stationary Cyclists ArcGIS JS API</a></li>
+                      <li><a target="" href="http://jsbin.com/tawufe/11/edit?html,output">SF Stationary Cyclists Esri Leaflet API</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" id="">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Apps <b class="caret"></b></a>
+                    <ul class="dropdown-menu" id="myDropdown">
+                      <li><a target="" href="http://alaframboise.github.io/apps/bikes/">World Bike Finder</a></li>
+                      <li><a target="" href="http://alaframboise.github.io/terraformer-apps/examples/browser/index.html">Terraformer Apps</a></li>
+                      <li><a target="" href="http://esri.github.io/gis-day-map/index.html">GIS Day</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" id="">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Code <b class="caret"></b></a>
+                    <ul class="dropdown-menu" id="myDropdown">
+                        <li><a target="" href="https://github.com/Esri/quickstart-map-js">ArcGIS JS Quickstarts</a></li>
+                        <li><a target="" href="https://github.com/Esri/bootstrap-map-js">Bootstrap-map-js</a></li>
+                        <li><a target="" href="https://github.com/Esri/geojson-layer-js">ArcGIS GeoJSON Layer</a></li>
+                        <li><a target="" href="http://esri.github.io/cluster-layer-js/index.html">ArcGIS Cluster Layer</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown" id="">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Slides <b class="caret"></b></a>
+                    <ul class="dropdown-menu" id="myDropdown">
+                        <li><a target="" href="http://slides.com/michaelgaigg/devsummit2015/#/">DevSummit 2015 - UI and UX for Web Map Apps Part I</a></li>
+                        <li><a target="" href="http://slides.com/alaframboise/betteruianduxformappingapps-part2#/">DevSummit 2015 - UI and UX for Web Map Apps Part II</a></li>
+                        <li class="divider"></li>
+                        <li><a target="" href="http://tomwayson.github.io/responsive-citizens/index.html">Better UI and UX Design for Mapping Apps</a></li>
+                        <li><a target="" href="http://www.slideshare.net/aGISGuy/esri-map-app-builders">Esri Map App Builders</a></li>
 
-  <script src="http://js.arcgis.com/4.0beta1/"></script>
 
-  <script>
-    
-    var map, view,
-    timer, 
-    fps = 15,
-    basemaps = [],
-    i = 0;
+                    </ul>
+                </li>
+                <li class="dropdown" id="">
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Meetups <b class="caret"></b></a>
+                    <ul class="dropdown-menu" id="myDropdown">
+                        <li><a target="" href="http://alaframboise.github.io/presentations/geodevmeetups/portland11-10-14.html#">Portland</a></li>
+                        <li><a target="" href="http://alaframboise.github.io/presentations/geodevmeetups/seattle 10-14-14.html#">Seattle</a></li>
+                        <li><a target="" href="https://geonet.esri.com/groups/geodev">GeoDev Group</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div><!-- /navbar -->
 
-    require([
-      "esri/Map",
-      "esri/views/SceneView",
+    <div class="map-container">
+      <div id="mapViewDiv" class="map-position-absolute"></div>
+    </div><!-- /.container -->
+
+    <script type="text/javascript">
+      var dojoConfig = {
+          packages: [{
+              name: "bootstrap",
+              location: "//rawgit.com/xsokev/Dojo-Bootstrap/master"
+          },
+          {
+              name: "calcite-maps",
+              location: "//esri.github.io/calcite-maps/js/dojo"
+          }]
+      };
+    </script>
+
+    <script src="http://js.arcgis.com/4.0beta1/"></script>
+
+    <script>
       
-      "esri/layers/ArcGISTiledLayer",
-      "esri/layers/ArcGISElevationLayer",
-      
-      "dojo/dom-style",
-      "dojo/_base/fx",
-      "dojo/fx/easing",
-      "dojo/on", "dojo/query", "dojo/keys",
-      "dojo/dom",
-      
-      "dojo/domReady!"
-    ], function(Map, SceneView, ArcGISTiledLayer, ArcGISElevationLayer, domStyle, fx, easing, on, query, keys, dom) {
+      var map, view,
+      timer, 
+      fps = 15,
+      basemaps = [],
+      i = 0;
 
-      map = new Map({
-        basemap: "streets"
+      require([
+        "esri/Map",
+        "esri/views/SceneView",
+        
+        "esri/layers/ArcGISTiledLayer",
+        "esri/layers/ArcGISElevationLayer",
+        
+        "dojo/dom-style",
+        "dojo/_base/fx",
+        "dojo/fx/easing",
+        "dojo/on", 
+        "dojo/query", 
+        "dojo/keys",
+        "dojo/dom",
+
+        "bootstrap/Collapse", 
+        "bootstrap/Dropdown",
+        "bootstrap/Tab",
+        "bootstrap/Tooltip",
+        
+        "calcite-maps/calcitemapsdojo",
+
+        "dojo/domReady!"
+      ], function(Map, SceneView, ArcGISTiledLayer, ArcGISElevationLayer, domStyle, fx, easing, on, query, key, dom) {
+
+        map = new Map({
+          basemap: "streets"
+        });
+
+        view = new SceneView({
+          container: "mapViewDiv",
+          map: map,
+          scale: 50000000,
+          center: [-101.17, 21, 78]
+        });
+        
+        basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
+        basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer");
+        basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+        basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer");
+        basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
+        basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
+        basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
+        map.add(new ArcGISTiledLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"));
+        map.add(new ArcGISElevationLayer("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), 0);
+
+        map.then(function() {
+            // Prevent navigation
+            //map.view.navigationController.destroy();
+            animate();
+            swapMap();
+        });
+        
+        function animate() {
+            setTimeout( function(){
+                // Animate
+                requestAnimationFrame(animate);
+                // Move map
+                if (fps > 0) {
+                    var p = view.center;
+                    var lon = p.longitude;
+                    if (lon <= -180) {
+                    lon = 180;
+                    }
+                    lon = lon - .05;
+                    p.longitude = lon;
+                    p.z = 0;
+                    p.hasZ = true;
+                    view.center = p;
+                }
+            }, 500 / fps);
+        }
+        
+        function swapMap() {
+          setInterval(function() {
+            i = (i < basemaps.length - 1) ? i + 1 : 0; 
+             fade(i);
+          }, 10000);
+        }
+        
+        function fade(i) {
+          fx.fadeOut({node: query(".esriViewSurface")[0],
+            duration: 2000,
+            easing: easing.quadIn,
+            onEnd: function() {
+              // Hide
+              map.remove(0);
+              var lyr = new ArcGISTiledLayer(basemaps[i]);
+              map.add(lyr);
+              // Show           
+              fx.fadeIn({node: query(".esriViewSurface")[0],
+                duration: 2000,
+                easing: easing.quadIn
+              }).play();
+            }
+          }).play();
+        }
+
+        // on(document, "keydown", function(event) {
+        //     switch(event.keyCode) {
+        //       case keys.UP_ARROW:                  
+        //             fps += fps > 45 ? 0 : 5;
+        //             break;
+        //       case keys.DOWN_ARROW:
+        //             fps -= fps > 0 ? 5 : 0;
+        //             break;
+        //     }
+        // });
+
       });
-
-      view = new SceneView({
-        container: "viewDiv",
-        map: map,
-        scale: 50000000,
-        center: [-101.17, 21, 78]
-      });
-      
-      basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer");
-      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer");
-      basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
-      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer");
-      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer");
-      basemaps.push("http://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer");
-      basemaps.push("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer");
-      map.add(new ArcGISTiledLayer("http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer"));
-      map.add(new ArcGISElevationLayer("http://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer"), 0);
-
-      map.then(function() {
-          // Prevent navigation
-          //map.view.navigationController.destroy();
-          animate();
-          swapMap();
-      });
-      
-      function animate() {
-          setTimeout( function(){
-              // Animate
-              requestAnimationFrame(animate);
-              // Move map
-              if (fps > 0) {
-                  var p = view.center;
-                  var lon = p.longitude;
-                  if (lon <= -180) {
-                  lon = 180;
-                  }
-                  lon = lon - .05;
-                  p.longitude = lon;
-                  p.z = 0;
-                  p.hasZ = true;
-                  view.center = p;
-              }
-          }, 500 / fps);
-      }
-      
-      function swapMap() {
-        setInterval(function() {
-          i = (i < basemaps.length - 1) ? i + 1 : 0; 
-           fade(i);
-        }, 10000);
-      }
-      
-      function fade(i) {
-        fx.fadeOut({node: query(".esriViewSurface")[0],
-          duration: 2000,
-          easing: easing.quadIn,
-          onEnd: function() {
-            // Hide
-            map.remove(0);
-            var lyr = new ArcGISTiledLayer(basemaps[i]);
-            map.add(lyr);
-            // Show           
-            fx.fadeIn({node: query(".esriViewSurface")[0],
-              duration: 2000,
-              easing: easing.quadIn
-            }).play();
-          }
-        }).play();
-      }
-
-      // on(document, "keydown", function(event) {
-      //     switch(event.keyCode) {
-      //       case keys.UP_ARROW:                  
-      //             fps += fps > 45 ? 0 : 5;
-      //             break;
-      //       case keys.DOWN_ARROW:
-      //             fps -= fps > 0 ? 5 : 0;
-      //             break;
-      //     }
-      // });
-
-    });
-  </script>
-  
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script
-   
+    </script>
+     
   </body>
 </html>
