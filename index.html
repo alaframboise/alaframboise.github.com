@@ -26,6 +26,7 @@
             margin: 0;
             padding: 0;
             height: 100%;
+            background-color: #000;
         }
         .bg-blue {
           background-color: rgba(25, 111, 166, 0.5);
@@ -215,17 +216,19 @@
         
         function fade(i) {
           fx.fadeOut({node: query(".esriViewSurface")[0],
-            duration: 2000,
-            easing: easing.quadIn,
+            duration: 1000,
+            easing: easing.quintIn,
             onEnd: function() {
               // Hide
-              map.remove(0);
+              //map.remove(0);
               var lyr = new ArcGISTiledLayer(basemaps[i]);
               map.add(lyr);
+              map.remove(1);
+             
               // Show           
               fx.fadeIn({node: query(".esriViewSurface")[0],
-                duration: 2000,
-                easing: easing.quadIn
+                duration: 1000,
+                easing: easing.quintOut
               }).play();
             }
           }).play();
